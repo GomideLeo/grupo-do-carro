@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:gupo_carro/gasolina/CarStats.dart';
+
+import 'model/GasStatsModel.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  
+  List<GasStatsModel> stats = [
+    GasStatsModel("Gasolina", 10, "km", "L"),
+    GasStatsModel("Etanol", 8, "km", "L")
+  ];
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -24,7 +32,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: CarStats(stats: stats),
     );
   }
 }
