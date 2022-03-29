@@ -1,15 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:gupo_carro/gasolina/CarData.dart';
+import 'package:gupo_carro/model/CarModel.dart';
+import 'package:gupo_carro/model/OdometerModel.dart';
+
+import 'model/GasStatsModel.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  
+  CarModel car = CarModel(
+    nickname: "teste",
+    plate: "ABC1234",
+    odometer: OdometerModel(value: 50000),
+    gasStats: [
+      GasStatsModel(gasType: "Gasolina", rate: 10),
+      GasStatsModel(gasType: "Etanol", rate: 8.5)
+    ]
+  );
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
@@ -24,7 +39,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: CarData(car: car),
     );
   }
 }
