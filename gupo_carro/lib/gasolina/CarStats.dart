@@ -14,10 +14,8 @@ class _CarStatsState extends State<CarStats> {
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: buildStats()
-      ),
+    return Column(
+      children: buildStats()
     );
   }
   

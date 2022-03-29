@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gupo_carro/gasolina/CarStats.dart';
+import 'package:gupo_carro/gasolina/CarData.dart';
+import 'package:gupo_carro/model/CarModel.dart';
+import 'package:gupo_carro/model/OdometerModel.dart';
 
 import 'model/GasStatsModel.dart';
 
@@ -9,10 +11,15 @@ void main() {
 
 class MyApp extends StatelessWidget {
   
-  List<GasStatsModel> stats = [
-    GasStatsModel("Gasolina", 10, "km", "L"),
-    GasStatsModel("Etanol", 8, "km", "L")
-  ];
+  CarModel car = CarModel(
+    nickname: "teste",
+    plate: "ABC1234",
+    odometer: OdometerModel(value: 50000),
+    gasStats: [
+      GasStatsModel(gasType: "Gasolina", rate: 10),
+      GasStatsModel(gasType: "Etanol", rate: 8.5)
+    ]
+  );
 
   // This widget is the root of your application.
   @override
@@ -32,7 +39,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: CarStats(stats: stats),
+      home: CarData(car: car),
     );
   }
 }
