@@ -12,7 +12,7 @@ class CarData extends StatefulWidget {
   bool showOdometer;
   bool showGasStats;
   
-  CarData({required this.car, this.showOdometer = true, this.showPhoto = true, this.showGasStats = true});
+  CarData(this.car, {this.showOdometer = true, this.showPhoto = true, this.showGasStats = true});
   
   @override
   _CarDataState createState() => _CarDataState();

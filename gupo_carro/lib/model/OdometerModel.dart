@@ -1,5 +1,3 @@
-import 'dart:math';
-
 class OdometerModel {
   int value;
   String unit;
@@ -8,6 +6,6 @@ class OdometerModel {
   String toString() {
     return value.toString() + " " + unit;
   }
-
+  
   OdometerModel({required this.value, this.unit="km"});
 }
