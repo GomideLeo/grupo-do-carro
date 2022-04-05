@@ -15,5 +15,5 @@ class GasStatsModel {
         volumeUnit;
   }
 
-  GasStatsModel({required this.gasType, required this.rate, this.distanceUnit="km", this.volumeUnit="L"});
+  GasStatsModel({required this.gasType, this.rate=0, this.distanceUnit="km", this.volumeUnit="L"});
 }

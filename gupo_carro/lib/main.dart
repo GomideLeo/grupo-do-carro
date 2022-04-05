@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:gupo_carro/gasolina/CarData.dart';
-import 'package:gupo_carro/gasolina/postoData.dart';
 import 'package:gupo_carro/gasolina/postosPerto.dart';
 import 'package:gupo_carro/model/CarModel.dart';
 import 'package:gupo_carro/model/GasPriceModel.dart';
 import 'package:gupo_carro/model/OdometerModel.dart';
 import 'package:gupo_carro/model/PostoModel.dart';
+import 'package:gupo_carro/shared/CadastroVeiculo.dart';
 
 import 'model/GasStatsModel.dart';
 
@@ -52,11 +51,12 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: PostosPerto(
-        postos: postos,
-        gasTypes: ["Gasolina", "Etanol"],
-        car: car,
-      ),
+      // home: PostosPerto(
+      //   postos: postos,
+      //   gasTypes: const ["Gasolina", "Etanol"],
+      //   car: car,
+      // ),
+      home: CadastroVeiculo()
 
       // home: CarData(car),
     );

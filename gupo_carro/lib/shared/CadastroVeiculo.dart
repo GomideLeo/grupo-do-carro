@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+
 class CadastroVeiculo extends StatefulWidget {
   @override
   _CadastroVeiculoState createState() => _CadastroVeiculoState();
 }
 
 class _CadastroVeiculoState extends State<CadastroVeiculo> {
-  TextEditingController _textEditingController = TextEditingController(); //instanciar o objeto para controlar o campo de texto
+  TextEditingController _textEditingController =
+      TextEditingController(); //instanciar o objeto para controlar o campo de texto
   bool _gasolina = false;
   bool _alcool = false;
   bool _diesel = false;
+
+  var teste = {
+    "Gasolina": {"accept": false, "rate": 0},
+    "Etanol": {"accept": false, "rate": 0},
+    "Diesel": {"accept": false, "rate": 0}
+  };
 
   // Initial Selected Value
   String dropdownvalue = 'Selecione o veículo';
@@ -46,7 +54,7 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
     'Honda Civic',
     'Hyundai HB20',
     'Hyundai Creta',
-
+    'Outro'
   ];
 
   @override
@@ -58,7 +66,6 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
       body: Column(
         children: <Widget>[
           DropdownButton(
-
             // Initial Value
             value: dropdownvalue,
 
@@ -74,77 +81,67 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
             }).toList(),
             // After selecting the desired option,it will
             // change button value to selected value
-            onChanged: (String newValue) {
+            onChanged: (String? newValue) {
               setState(() {
-                dropdownvalue = newValue;
+                dropdownvalue = newValue ?? "Selecione o veículo";
               });
             },
           ),
-
-
           Padding(
-            padding: EdgeInsets.all(32),
+            padding: const EdgeInsets.all(32),
             child: TextField(
-              keyboardType: TextInputType.datetime,
-              decoration: InputDecoration(
-                  labelText: "Quantidade de Km/L: "
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(labelText: "Quantidade de Km/L: "),
+              style: const TextStyle(
+                fontSize: 18,
               ),
-              style: TextStyle(
-                fontSize: 30,
-                color: Colors.red,
-              ),
-              controller: _textEditingController, //controlador do nosso campo de texto
+              controller:
+                  _textEditingController, //controlador do nosso campo de texto
             ),
           ),
-
-
-          Text(
+          const Text(
             'Combustíveis Aceitos',
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
-            style:TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),
-                        ),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+          ),
           CheckboxListTile(
               title: Text("Gasolina"),
-
               value: _gasolina,
-              onChanged: (bool valor){
+              onChanged: (bool? valor) {
                 setState(() {
-                  _gasolina = valor;
+                  _gasolina = valor ?? false;
                 });
-              }
-          ),
+              }),
           CheckboxListTile(
               title: Text("Alcool"),
-
               value: _alcool,
-              onChanged: (bool valor){
+              onChanged: (bool? valor) {
                 setState(() {
-                  _alcool = valor;
+                  _alcool = valor ?? false;
                 });
-              }
-          ),
+              }),
           CheckboxListTile(
               title: Text("Diesel"),
-
               value: _diesel,
-              onChanged: (bool valor){
+              onChanged: (bool? valor) {
                 setState(() {
-                  _diesel = valor;
+                  _diesel = valor ?? false;
                 });
-              }
-          ),
-
+              }),
           ElevatedButton(
-            child: Text("Adicionar"),
+            child: const Text("Adicionar"),
             style: ElevatedButton.styleFrom(
               primary: Colors.green,
             ),
-            onPressed: (){
+            onPressed: () {
               print("Texto digitado: " + _textEditingController.text);
-              " Gasolina: " +_gasolina.toString() +
-                  " Alcool: " +_alcool.toString() +
-                  " Diesel: " +_diesel.toString();
+              " Gasolina: " +
+                  _gasolina.toString() +
+                  " Alcool: " +
+                  _alcool.toString() +
+                  " Diesel: " +
+                  _diesel.toString();
             },
           ),
         ],

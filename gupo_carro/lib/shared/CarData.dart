@@ -2,7 +2,7 @@ import 'dart:html';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gupo_carro/gasolina/CarStats.dart';
+import 'package:gupo_carro/shared/CarStats.dart';
 import 'package:gupo_carro/model/CarModel.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

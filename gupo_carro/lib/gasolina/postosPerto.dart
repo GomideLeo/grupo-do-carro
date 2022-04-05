@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gupo_carro/gasolina/CarData.dart';
+import 'package:gupo_carro/shared/CarData.dart';
 import 'package:gupo_carro/gasolina/PostoData.dart';
 import 'package:gupo_carro/model/CarModel.dart';
-import 'package:gupo_carro/model/GasPriceModel.dart';
 import 'package:gupo_carro/model/PostoModel.dart';
 
 class PostosPerto extends StatefulWidget {
