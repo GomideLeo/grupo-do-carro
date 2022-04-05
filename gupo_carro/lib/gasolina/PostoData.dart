@@ -32,7 +32,9 @@ class _PostoDataState extends State<PostoData> {
               crossAxisAlignment: CrossAxisAlignment.center,
             ),
           ),
-          Column(children: buildPostoData(widget.posto.gasPrices))
+          Column(
+            children: buildPostoData(widget.posto.gasPrices),
+          ),
         ],
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
