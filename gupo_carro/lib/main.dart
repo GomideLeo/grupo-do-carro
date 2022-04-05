@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gupo_carro/gasolina/CarData.dart';
 import 'package:gupo_carro/gasolina/postoData.dart';
+import 'package:gupo_carro/gasolina/postosPerto.dart';
 import 'package:gupo_carro/model/CarModel.dart';
 import 'package:gupo_carro/model/GasPriceModel.dart';
 import 'package:gupo_carro/model/OdometerModel.dart';
@@ -15,6 +16,7 @@ void main() {
 class MyApp extends StatelessWidget {
   CarModel car = CarModel(
       nickname: "teste",
+      photo: "https://source.unsplash.com/collection/31212027",
       plate: "ABC1234",
       odometer: OdometerModel(value: 50000),
       gasStats: [
@@ -22,11 +24,17 @@ class MyApp extends StatelessWidget {
         GasStatsModel(gasType: "Etanol", rate: 8.5)
       ]);
 
-  PostoModel posto = PostoModel(image: "petrobras.jpg", gasPrices: [
-    GasPriceModel(gasType: "Gasolina", value: 5.2),
-    GasPriceModel(gasType: "Etanol", value: 5.0)
-  ]);
-  
+  List<PostoModel> postos = [
+    PostoModel(image: "ipiranga.jpg", gasPrices: [
+      GasPriceModel(gasType: "Gasolina", value: 5.7),
+      GasPriceModel(gasType: "Etanol", value: 5.2)
+    ]),
+    PostoModel(image: "petrobras.jpg", gasPrices: [
+      GasPriceModel(gasType: "Gasolina", value: 5.8),
+      GasPriceModel(gasType: "Etanol", value: 5.4)
+    ])
+  ];
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -44,7 +52,12 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: PostoData(posto: posto, gasTypes: ["Gasolina", "Etanol"],)
+      home: PostosPerto(
+        postos: postos,
+        gasTypes: ["Gasolina", "Etanol"],
+        car: car,
+      ),
+
       // home: CarData(car),
     );
   }

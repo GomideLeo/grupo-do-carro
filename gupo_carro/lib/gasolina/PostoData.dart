@@ -16,11 +16,29 @@ class PostoData extends StatefulWidget {
 class _PostoDataState extends State<PostoData> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Row(children: [
-          Column(children: [Image.asset("assets/images/" + widget.posto.image)]),
+    return Container(
+      decoration: BoxDecoration(border: Border.all()),
+      padding: const EdgeInsets.all(8.0),
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0),
+            child: Column(
+              children: [
+                Image.asset("assets/images/" + widget.posto.image,
+                    width: 50, height: 50)
+              ],
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+            ),
+          ),
           Column(children: buildPostoData(widget.posto.gasPrices))
-        ]));
+        ],
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+      ),
+    );
   }
 
   List<Text> buildPostoData(List<GasPriceModel> gasPrices) => gasPrices
