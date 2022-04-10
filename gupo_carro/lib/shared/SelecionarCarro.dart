@@ -1,15 +1,20 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gupo_carro/shared/AppData.dart';
 import 'package:gupo_carro/shared/CarData.dart';
 import 'package:gupo_carro/model/CarModel.dart';
 
 class SelecionarCarro extends StatelessWidget {
-  List<CarModel>? carsList = null;
+  List<CarModel> carsList = [];
 
-  SelecionarCarro({Key? key, List<CarModel>? cars}) : super(key: key);
+  SelecionarCarro();
 
   @override
   Widget build(BuildContext context) {
+    AppData appData = AppData.of(context);
+    carsList = appData.carList;
     return Scaffold(
       body: Row(
         children: [
@@ -27,23 +32,24 @@ class SelecionarCarro extends StatelessWidget {
   List<Widget> buildComponent() {
     List<Widget> children = [];
 
-    children.addAll(carsList!
-        .map((car) => CarData(car, showPhoto: true, showOdometer: true, showGasStats: false)));
-    children.add(Padding(
-      padding: const EdgeInsets.only(top: 8.0),
-      child: OutlinedButton(
-        onPressed: (() {}),
-        child: const Text("Adicionar Carro"),
+    children.addAll(carsList.map((car) {
+      return OutlinedButton(
+        onPressed: (() => log(car.nickname)),
+        child: CarData(car,
+            showPhoto: true, showOdometer: true, showGasStats: false),
+      );
+    }));
+    children.add(
+      OutlinedButton(
+        onPressed: (() => log("asdasdasd")),
         style: ButtonStyle(
-          padding: MaterialStateProperty.all<EdgeInsets>(
-              const EdgeInsets.all(30.0)),
+          padding:
+              MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(16.0)),
         ),
+        child: Text("Adicionar Carro"),
       ),
-    ),
     );
-
 
     return children;
   }
-
 }
