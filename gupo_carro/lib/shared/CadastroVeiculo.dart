@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
 class CadastroVeiculo extends StatefulWidget {
+  const CadastroVeiculo({Key? key}) : super(key: key);
+
   @override
   _CadastroVeiculoState createState() => _CadastroVeiculoState();
 }
 
 class _CadastroVeiculoState extends State<CadastroVeiculo> {
-  TextEditingController _textEditingController =
-      TextEditingController(); //instanciar o objeto para controlar o campo de texto
+  final TextEditingController _textEditingController = TextEditingController(); //instanciar o objeto para controlar o campo de texto
   bool _gasolina = false;
   bool _alcool = false;
   bool _diesel = false;
@@ -135,13 +136,13 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
               primary: Colors.green,
             ),
             onPressed: () {
-              print("Texto digitado: " + _textEditingController.text);
+              print("Texto digitado: " + _textEditingController.text +
               " Gasolina: " +
                   _gasolina.toString() +
                   " Alcool: " +
                   _alcool.toString() +
                   " Diesel: " +
-                  _diesel.toString();
+                  _diesel.toString());
             },
           ),
         ],

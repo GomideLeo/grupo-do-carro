@@ -6,8 +6,6 @@ class SelecionarServico extends StatelessWidget {
     'Óleo',
     'Gasolina',
     'Álcool',
-    'Óleo',
-    'Óleo',
   ];
 
   SelecionarServico({Key? key}) : super(key: key);
@@ -49,8 +47,6 @@ class _MyHomePageState extends State<MyHomePage> {
       'Óleo',
       'Gasolina',
       'Álcool',
-      'Óleo',
-      'Óleo',
     ];
 
     return Scaffold(
@@ -76,6 +72,8 @@ class _MyHomePageState extends State<MyHomePage> {
           );
         },
       )),
+
+
       bottomNavigationBar: BottomNavigationBar(
         items: [
           BottomNavigationBarItem(
