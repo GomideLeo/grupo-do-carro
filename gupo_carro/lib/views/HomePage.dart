@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gupo_carro/model/CarModel.dart';
 import 'package:gupo_carro/shared/CarData.dart';
 import 'package:gupo_carro/shared/AppData.dart';
+import 'package:gupo_carro/shared/SelecionarCarro.dart';
 import 'package:gupo_carro/shared/SelecionarServico.dart';
 
 class HomePage extends StatelessWidget {
@@ -10,7 +11,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AppData appData = AppData.of(context);
-
+    
     // verificação de primeiro login
     // if (appData!.carList.isEmpty) {
     //   Navigator.pushNamed(context, '/car/register');
@@ -29,32 +30,33 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('selected: ${appData.selected}\ncarName: ${selectedCar.nickname}\ncarPlate: ${selectedCar.plate}'),
-            // SelecionarServico(),
-            OutlinedButton(
-              onPressed: (() {
-                int newSelection = appData.selected-1;
-                appData.chooseCar(newSelection);
-                selectedCar = appData.carList[newSelection];
-              }),
-              child: const Text("Selecionar anterior"),
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all<EdgeInsets>(
-                    const EdgeInsets.all(30.0)),
-              ),
-            ),
-            OutlinedButton(
-              onPressed: (() {
-                int newSelection = appData.selected+1;
-                appData.chooseCar(newSelection);
-                selectedCar = appData.carList[newSelection];
-              }),
-              child: const Text("Selecionar proximo"),
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all<EdgeInsets>(
-                    const EdgeInsets.all(30.0)),
-              ),
-            ),
+            SelecionarCarro()
+            // Text('selected: ${appData.selected}\ncarName: ${selectedCar.nickname}\ncarPlate: ${selectedCar.plate}'),
+            // // SelecionarServico(),
+            // OutlinedButton(
+            //   onPressed: (() {
+            //     int newSelection = appData.selected-1;
+            //     appData.chooseCar(newSelection);
+            //     selectedCar = appData.carList[newSelection];
+            //   }),
+            //   child: const Text("Selecionar anterior"),
+            //   style: ButtonStyle(
+            //     padding: MaterialStateProperty.all<EdgeInsets>(
+            //         const EdgeInsets.all(30.0)),
+            //   ),
+            // ),
+            // OutlinedButton(
+            //   onPressed: (() {
+            //     int newSelection = appData.selected+1;
+            //     appData.chooseCar(newSelection);
+            //     selectedCar = appData.carList[newSelection];
+            //   }),
+            //   child: const Text("Selecionar proximo"),
+            //   style: ButtonStyle(
+            //     padding: MaterialStateProperty.all<EdgeInsets>(
+            //         const EdgeInsets.all(30.0)),
+            //   ),
+            // ),
             // CarData(selectedCar),
           ],
         ),

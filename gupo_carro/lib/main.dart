@@ -18,14 +18,14 @@ class App extends StatefulWidget {
 }
 
 class AppState extends State<App> {
-  int selected = -1;
+  int selected = 0;
   List<CarModel> carList = List<CarModel>.empty();
 
   _get() async {
     var res = 'Resposta do back end';//await http.get('request URL');
     // tratamento dados back end
     // seta dados para serem utilizados
-    setState(() => selected = -1);
+    setState(() => selected = 0);
     setState(() => carList = List<CarModel>.empty());
   }
 
