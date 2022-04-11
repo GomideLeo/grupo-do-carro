@@ -42,12 +42,15 @@ class _CarViewState extends State<CarView> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => PostosPerto(
-                          car: widget.car,
-                          gasTypes: widget.car.gasStats
-                                  ?.map((e) => e.gasType)
-                                  .toList() ??
-                              [])),
+                    MaterialPageRoute(
+                      builder: (context) => PostosPerto(
+                        car: widget.car,
+                        gasTypes: widget.car.gasStats
+                                ?.map((e) => e.gasType)
+                                .toList() ??
+                            [],
+                      ),
+                    ),
                   );
                 },
                 child: Text("Descobrir postos Perto"))
