@@ -136,13 +136,7 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
               primary: Colors.green,
             ),
             onPressed: () {
-              print("Texto digitado: " + _textEditingController.text +
-              " Gasolina: " +
-                  _gasolina.toString() +
-                  " Alcool: " +
-                  _alcool.toString() +
-                  " Diesel: " +
-                  _diesel.toString());
+              Navigator.pop(context);
             },
           ),
         ],
