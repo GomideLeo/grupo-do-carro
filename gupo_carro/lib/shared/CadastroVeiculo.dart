@@ -62,7 +62,7 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cadastro de Veículo"),
+        title: const Text("Cadastro de Veículo"),
       ),
       body: Column(
         children: <Widget>[
@@ -92,7 +92,7 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
             padding: const EdgeInsets.all(32),
             child: TextField(
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: "Quantidade de Km/L: "),
+              decoration: const InputDecoration(labelText: "Quantidade de Km/L: "),
               style: const TextStyle(
                 fontSize: 18,
               ),
@@ -107,7 +107,7 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
           ),
           CheckboxListTile(
-              title: Text("Gasolina"),
+              title: const Text("Gasolina"),
               value: _gasolina,
               onChanged: (bool? valor) {
                 setState(() {
@@ -115,7 +115,7 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
                 });
               }),
           CheckboxListTile(
-              title: Text("Alcool"),
+              title: const Text("Alcool"),
               value: _alcool,
               onChanged: (bool? valor) {
                 setState(() {
@@ -123,7 +123,7 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
                 });
               }),
           CheckboxListTile(
-              title: Text("Diesel"),
+              title: const Text("Diesel"),
               value: _diesel,
               onChanged: (bool? valor) {
                 setState(() {
