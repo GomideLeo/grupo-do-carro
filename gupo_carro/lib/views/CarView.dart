@@ -4,7 +4,6 @@ import 'package:gupo_carro/model/CarModel.dart';
 import 'package:gupo_carro/oleo/MaintLista.dart';
 import 'package:gupo_carro/shared/CarData.dart';
 import 'package:gupo_carro/shared/AppData.dart';
-import 'package:gupo_carro/shared/SelecionarCarro.dart';
 import 'package:gupo_carro/shared/SelecionarServico.dart';
 import '../model/CarModel.dart';
 
@@ -37,7 +36,7 @@ class _CarViewState extends State<CarView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             CarData(widget.car),
-            Text("Abastecer Carro:"),
+            const Text("Abastecer Carro:"),
             OutlinedButton(
                 onPressed: () {
                   Navigator.push(
@@ -53,7 +52,7 @@ class _CarViewState extends State<CarView> {
                     ),
                   );
                 },
-                child: Text("Descobrir postos Perto"))
+                child: const Text("Descobrir postos Perto"))
           ],
         ),
       ),
@@ -71,19 +70,20 @@ class _CarViewState extends State<CarView> {
         unselectedItemColor: Colors.black,
         selectedItemColor: Colors.blue,
         onTap: onTabTapped,
+        // ignore: prefer_const_literals_to_create_immutables
         items: [
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Estatísticas',
               backgroundColor: Colors.blue),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: 'Manutenção',
+              backgroundColor: Colors.blue),
+          const BottomNavigationBarItem(
               icon: Icon(Icons.notifications),
               label: 'Notificações',
               backgroundColor: Colors.blue),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.settings),
-              label: 'Manutenção',
-              backgroundColor: Colors.blue)
         ],
       ),
     );
