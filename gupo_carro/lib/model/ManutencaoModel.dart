@@ -10,10 +10,10 @@ class ManutencaoModel {
   int type;
   String typeName;
   DateTime data;
-  int preco;
-  int odometro;
-  DateTime dataProximo;
-  int odometroProximo;
+  int? preco;
+  int? odometro;
+  DateTime? dataProximo;
+  int? odometroProximo;
 
   ManutencaoModel({
     required this.id,
