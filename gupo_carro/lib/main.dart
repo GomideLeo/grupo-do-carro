@@ -6,9 +6,12 @@ import 'package:gupo_carro/shared/CadastroVeiculo.dart';
 import 'package:gupo_carro/shared/SelecionarCarro.dart';
 import 'package:gupo_carro/views/HomePage.dart';
 
-void main() {
+void main() async {
+
+
   runApp(const App());
 }
+
 
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+//import 'package:gupo_carro/model/ManutencaoDB.dart';
+//import 'package:gupo_carro/model/ManutencaoModel.dart';
+
 class InfoOleo extends StatefulWidget {
   const InfoOleo({Key? key}) : super(key: key);
 
@@ -8,13 +11,14 @@ class InfoOleo extends StatefulWidget {
 }
 
 List<DropdownMenuItem<String>> get dropdownItems {
+  // READ FROM MANUTENCAO TYPE
   List<DropdownMenuItem<String>> menuItems = [
-    const DropdownMenuItem(child: Text("Manutencao 1"), value: "Manutencao 1"),
+    const DropdownMenuItem(child: Text("Manutencao 1"), value: 1),
     const DropdownMenuItem(
-        child: const Text("Manutencao 2"), value: "Manutencao 2"),
+        child: const Text("Manutencao 2"), value: 2),
     const DropdownMenuItem(
-        child: const Text("Manutencao 3"), value: "Manutencao 3"),
-    const DropdownMenuItem(child: Text("Manutencao 4"), value: "Manutencao 4"),
+        child: const Text("Manutencao 3"), value: 3),
+    const DropdownMenuItem(child: Text("Manutencao 4"), value: 4),
   ];
   return menuItems;
 }
@@ -85,7 +89,24 @@ class _InfoOleoState extends State<InfoOleo> {
                 color: Colors.black,
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              // open database
+              //final DAO = ManutencaoDB();
+              // get data
+
+              // add data
+              //DAO.insertManutencao(ManutencaoModel(
+              //    id: -1, // placeholder for adding
+              //    idCarro: idCarro,
+              //    type: type,
+              //    typeName: "", // placeholder for adding
+              //    data: data,
+              //    odometro: odometro,
+              //    dataProximo: dataProximo,
+              //    odometroProximo: odometroProximo,
+              //)
+              );
+            },
           ),
         )
       ],
