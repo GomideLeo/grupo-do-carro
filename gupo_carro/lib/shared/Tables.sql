@@ -1,27 +1,27 @@
-CREATE TABLE Manutencao {
-    INT id NOT NULL PRIMARY KEY AUTOINCREMENT,
-    INT idCarro NOT NULL,
-    DATE data NOT NULL,
-    INT manType NOT NULL,
-    INT odometro,
-    INT preco,
-    DATE dataProximo,
-    INT odometroProximo,
+CREATE TABLE Manutencao (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    idCarro INTEGER NOT NULL,
+    data DATE NOT NULL,
+    manType INTEGER NOT NULL,
+    odometro INTEGER,
+    preco INTEGER,
+    dataProximo DATE,
+    odometroProximo INTEGER,
     FOREIGN KEY(manType) REFERENCES ManutencaoType(id)
-};
+);
 
-CREATE TABLE ManutencaoType {
-    INT id NOT NULL PRIMARY KEY AUTOINCREMENT,
-    CHAR(255) name NOT NULL
-};
+CREATE TABLE ManutencaoType (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL
+);
 
-CREATE TABLE Abastecimento {
-    INT id NOT NULL PRIMARY KEY AUTOINCREMENT,
-    INT idCarro NOT NULL,
-    DATE data NOT NULL,
-    INT quantidadeLitros NOT NULL,
-    INT preco NOT NULL
-};
+CREATE TABLE Abastecimento (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    idCarro INTEGER NOT NULL,
+    data DATE NOT NULL,
+    quantidadeLitros INTEGER NOT NULL,
+    preco INTEGER NOT NULL
+);
 
 INSERT INTO ManutencaoType (name)
 VALUES ("Troca de oleo"), ("Agua do radiador");

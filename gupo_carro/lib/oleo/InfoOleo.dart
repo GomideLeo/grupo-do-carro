@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gupo_carro/model/ManutencaoDB.dart';
+import 'package:gupo_carro/model/ManutencaoTypeModel.dart';
 
 //import 'package:gupo_carro/model/ManutencaoDB.dart';
 //import 'package:gupo_carro/model/ManutencaoModel.dart';
+//import 'package:gupo_carro/model/ManutencaoTypeModel.dart';
 
 class InfoOleo extends StatefulWidget {
   const InfoOleo({Key? key}) : super(key: key);
@@ -10,22 +13,34 @@ class InfoOleo extends StatefulWidget {
   _InfoOleoState createState() => _InfoOleoState();
 }
 
-List<DropdownMenuItem<String>> get dropdownItems {
-  // READ FROM MANUTENCAO TYPE
-  List<DropdownMenuItem<String>> menuItems = [
-    const DropdownMenuItem(child: Text("Manutencao 1"), value: 1),
-    const DropdownMenuItem(
-        child: const Text("Manutencao 2"), value: 2),
-    const DropdownMenuItem(
-        child: const Text("Manutencao 3"), value: 3),
-    const DropdownMenuItem(child: Text("Manutencao 4"), value: 4),
-  ];
-  return menuItems;
-}
-
-String selectedValue = "Manutencao 1";
 
 class _InfoOleoState extends State<InfoOleo> {
+  List<DropdownMenuItem<String>> dropdownItems = [const DropdownMenuItem(child: Text('LOADING'), value: '-1')];
+  String selectedValue = "-1";
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  void loadData() async {
+    // READ FROM MANUTENCAO TYPE
+    ManutencaoDB mdb = ManutencaoDB();
+    List<ManutencaoTypeModel> lmtm = await mdb.manutencaoTypes();
+
+    if (lmtm.length > 1) {
+      List<DropdownMenuItem<String>> menuItems = List.generate(lmtm.length, (i) {
+        return DropdownMenuItem(child: Text(lmtm[i].name), value: lmtm[i].id.toString());
+      });
+
+      setState(() {
+        dropdownItems = menuItems;
+        selectedValue = '1';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -41,12 +56,12 @@ class _InfoOleoState extends State<InfoOleo> {
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderSide:
-                        const BorderSide(color: Colors.black38, width: 1),
+                    const BorderSide(color: Colors.black38, width: 1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   border: OutlineInputBorder(
                     borderSide:
-                        const BorderSide(color: Colors.black38, width: 1),
+                    const BorderSide(color: Colors.black38, width: 1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   filled: true,
@@ -105,7 +120,7 @@ class _InfoOleoState extends State<InfoOleo> {
               //    dataProximo: dataProximo,
               //    odometroProximo: odometroProximo,
               //)
-              );
+              //);
             },
           ),
         )

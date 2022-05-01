@@ -4,10 +4,11 @@ import 'package:sqflite/sqflite.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:gupo_carro/model/ManutencaoModel.dart';
+import 'package:gupo_carro/model/ManutencaoTypeModel.dart';
 
 class ManutencaoDB {
   // Get a reference to the database.
-  final manutencaoDB = dbopener.getDatabase();
+  final manutencaoDB = DBOpener.getDatabase();
 
   Future<void> insertManutencao(ManutencaoModel manutencao) async {
     final db = await manutencaoDB;
@@ -15,6 +16,16 @@ class ManutencaoDB {
     await db.insert(
       'Manutencao',
       manutencao.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<void> insertManutencaoType(ManutencaoTypeModel mtm) async {
+    final db = await manutencaoDB;
+
+    await db.insert(
+      'ManutencaoType',
+      mtm.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
@@ -41,6 +52,19 @@ class ManutencaoDB {
     });
   }
 
+  Future<List<ManutencaoTypeModel>> manutencaoTypes() async {
+    final db = await manutencaoDB;
+
+    final List<Map<String, dynamic>> maps = await db.query('ManutencaoType');
+
+    return List.generate(maps.length, (i) {
+      return ManutencaoTypeModel(
+        id: maps[i]['id'],
+        name: maps[i]['name'],
+      );
+    });
+  }
+
   Future<void> updateManutencao(ManutencaoModel manutencao) async {
     final db = await manutencaoDB;
 
@@ -53,9 +77,22 @@ class ManutencaoDB {
       whereArgs: [manutencao.id],
     );
   }
+
+  Future<void> updateManutencaoType(ManutencaoTypeModel mtm) async {
+    final db = await manutencaoDB;
+
+    await db.update(
+      'Manutencao',
+      mtm.toMap(),
+      // Ensure that the Dog has a matching id.
+      where: 'id = ?',
+      // Prevent SQL injection.
+      whereArgs: [mtm.id],
+    );
+  }
 }
 
-class dbopener {
+class DBOpener {
   static Future<Database> getDatabase() async {
     WidgetsFlutterBinding.ensureInitialized();
     return openDatabase(
@@ -63,10 +100,10 @@ class dbopener {
       // When the database is first created, create a table.
       onCreate: (db, version) {
         db.execute(
-            """CREATE TABLE ManutencaoType {
-            INT id NOT NULL PRIMARY KEY AUTOINCREMENT,
-            CHAR(255) name NOT NULL
-          };"""
+            """CREATE TABLE IF NOT EXISTS ManutencaoType (
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL
+          );"""
         );
 
         db.insert(
@@ -82,17 +119,17 @@ class dbopener {
 
         // Run the CREATE TABLE statement on the database.
         return db.execute(
-            """CREATE TABLE Manutencao {
-            INT id NOT NULL PRIMARY KEY AUTOINCREMENT,
-            INT idCarro NOT NULL,
-            DATE data NOT NULL,
-            INT manType NOT NULL,
-            INT odometro,
-            INT preco,
-            DATE dataProximo,
-            INT odometroProximo,
+            """CREATE TABLE IF NOT EXISTS Manutencao (
+            id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+            idCarro INTEGER NOT NULL,
+            data DATE NOT NULL,
+            manType INTEGER NOT NULL,
+            odometro INTEGER,
+            preco INTEGER,
+            dataProximo DATE,
+            odometroProximo INTEGER,
             FOREIGN KEY(manType) REFERENCES ManutencaoType(id)
-          };"""
+          );"""
         );
       },
       version: 1,
