@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:gupo_carro/model/ManutencaoModel.dart';
-import 'package:gupo_carro/model/ManutencaoTypeModel.dart';
+import 'package:gupo_carro/model/TypeModel.dart';
 
 class ManutencaoDB {
   // Get a reference to the database.
@@ -20,12 +20,12 @@ class ManutencaoDB {
     );
   }
 
-  Future<void> insertManutencaoType(ManutencaoTypeModel mtm) async {
+  Future<void> insertManutencaoType(TypeModel manutencaoTM) async {
     final db = await manutencaoDB;
 
     await db.insert(
       'ManutencaoType',
-      mtm.toMap(),
+      manutencaoTM.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
@@ -34,8 +34,7 @@ class ManutencaoDB {
     final db = await manutencaoDB;
 
     final List<Map<String, dynamic>> maps = await db.query('Manutencao');
-    final List<Map<String, dynamic>> mapsType = await db.query(
-        'ManutencaoType');
+    final List<Map<String, dynamic>> mapsType = await db.query('ManutencaoType');
 
     return List.generate(maps.length, (i) {
       return ManutencaoModel(
@@ -52,13 +51,13 @@ class ManutencaoDB {
     });
   }
 
-  Future<List<ManutencaoTypeModel>> manutencaoTypes() async {
+  Future<List<TypeModel>> manutencaoTypes() async {
     final db = await manutencaoDB;
 
     final List<Map<String, dynamic>> maps = await db.query('ManutencaoType');
 
     return List.generate(maps.length, (i) {
-      return ManutencaoTypeModel(
+      return TypeModel(
         id: maps[i]['id'],
         name: maps[i]['name'],
       );
@@ -78,11 +77,11 @@ class ManutencaoDB {
     );
   }
 
-  Future<void> updateManutencaoType(ManutencaoTypeModel mtm) async {
+  Future<void> updateManutencaoType(TypeModel mtm) async {
     final db = await manutencaoDB;
 
     await db.update(
-      'Manutencao',
+      'ManutencaoType',
       mtm.toMap(),
       // Ensure that the Dog has a matching id.
       where: 'id = ?',

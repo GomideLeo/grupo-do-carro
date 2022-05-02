@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gupo_carro/model/ManutencaoDB.dart';
-import 'package:gupo_carro/model/ManutencaoTypeModel.dart';
+import 'package:gupo_carro/model/TypeModel.dart';
 
 //import 'package:gupo_carro/model/ManutencaoDB.dart';
 //import 'package:gupo_carro/model/ManutencaoModel.dart';
@@ -27,7 +27,7 @@ class _InfoOleoState extends State<InfoOleo> {
   void loadData() async {
     // READ FROM MANUTENCAO TYPE
     ManutencaoDB mdb = ManutencaoDB();
-    List<ManutencaoTypeModel> lmtm = await mdb.manutencaoTypes();
+    List<TypeModel> lmtm = await mdb.manutencaoTypes();
 
     if (lmtm.length > 1) {
       List<DropdownMenuItem<String>> menuItems = List.generate(lmtm.length, (i) {

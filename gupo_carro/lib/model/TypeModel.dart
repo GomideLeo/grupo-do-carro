@@ -1,8 +1,8 @@
-class ManutencaoTypeModel {
+class TypeModel {
   int id;
   String name;
 
-  ManutencaoTypeModel({
+  TypeModel({
     required this.id,
     required this.name,
   });
