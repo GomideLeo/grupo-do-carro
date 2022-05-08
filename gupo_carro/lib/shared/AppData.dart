@@ -9,7 +9,7 @@ import 'package:gupo_carro/model/OdometerModel.dart';
 class AppData extends InheritedWidget {
    int selected = 0;
   final List<CarModel> carList = [CarModel(
-      id: 1,
+      id: "1",
       nickname: "teste01",
       photo: "https://source.unsplash.com/collection/31212027",
       plate: "ABC1234",
@@ -19,7 +19,7 @@ class AppData extends InheritedWidget {
         GasStatsModel(gasType: "Etanol", rate: 8.5)
       ]),
       CarModel(
-        id: 2,
+        id: "2",
         nickname: "teste02",
         photo: "https://source.unsplash.com/collection/31212027",
         plate: "DEF5678",
@@ -29,7 +29,7 @@ class AppData extends InheritedWidget {
           GasStatsModel(gasType: "Etanol", rate: 7.8)
       ]),
       CarModel(
-        id: 3,
+        id: "3",
         nickname: "teste03",
         photo: "https://source.unsplash.com/collection/31212027",
         plate: "GHI3456",

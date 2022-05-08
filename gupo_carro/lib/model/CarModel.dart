@@ -2,7 +2,7 @@ import 'package:gupo_carro/model/GasStatsModel.dart';
 import 'package:gupo_carro/model/OdometerModel.dart';
 
 class CarModel {
-  int id;
+  String id;
   String nickname;
   String plate;
   String? modelo;

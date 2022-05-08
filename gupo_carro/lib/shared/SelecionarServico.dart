@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:gupo_carro/gasolina/postosPerto.dart';
 import 'package:gupo_carro/oleo/InfoOleo.dart';
 import 'package:gupo_carro/shared/CadastroVeiculo.dart';
+import 'package:gupo_carro/shared/CarStats.dart';
+import 'package:gupo_carro/shared/SelecionarCarro.dart';
 
 class _Opcao {
   String name;
@@ -13,7 +16,7 @@ class SelecionarServico extends StatefulWidget {
   final dropOpcoes = [
     _Opcao('Escolha', null),
     _Opcao("Óleo", InfoOleo()),
-    _Opcao("Abastecimento", CadastroVeiculo()),
+    _Opcao("Abastecimento", SelecionarCarro()),
     _Opcao("Manutencao", InfoOleo()),
   ];
 
@@ -24,7 +27,9 @@ class SelecionarServico extends StatefulWidget {
 class _SelecionarServicoState extends State<SelecionarServico> {
   @override
   Widget build(BuildContext context) {
-  ValueNotifier<_Opcao> _dropValue = ValueNotifier(widget.dropOpcoes.elementAt(0));
+    ValueNotifier<_Opcao> _dropValue =
+        ValueNotifier(widget.dropOpcoes.elementAt(0));
+    int _selectedValue = 0;
 
     return Container(
       child: Center(
@@ -35,12 +40,16 @@ class _SelecionarServicoState extends State<SelecionarServico> {
               children: [
                 DropdownButton(
                   hint: const Text('Escolha a opção desejada'),
-                  value: 0,
-                  onChanged: (escolha) => _dropValue.value =
-                      widget.dropOpcoes.elementAt(escolha as int),
+                  value: _selectedValue,
+                  onChanged: (escolha) {
+                    _selectedValue = escolha as int;
+                    _dropValue.value =
+                        widget.dropOpcoes.elementAt(_selectedValue);
+                  },
                   items: buildDropdown(),
                 ),
-                _dropValue.value.screen ?? Container(child: Text("Escolha uma opção")),
+                _dropValue.value.screen ??
+                    Container(child: Text("Escolha uma opção")),
               ],
             );
           },
@@ -51,16 +60,16 @@ class _SelecionarServicoState extends State<SelecionarServico> {
 
   List<DropdownMenuItem<int>> buildDropdown() {
     List<DropdownMenuItem<int>> output = [];
-    
-    for (int i = 0; i < widget.dropOpcoes.length; i++ ){
+
+    for (int i = 0; i < widget.dropOpcoes.length; i++) {
       output.add(
-          DropdownMenuItem<int>(
-            value: i,
-            child: Text(widget.dropOpcoes.elementAt(i).name),
-          ),
+        DropdownMenuItem<int>(
+          value: i,
+          child: Text(widget.dropOpcoes.elementAt(i).name),
+        ),
       );
     }
-    
+
     return output;
   }
 }

@@ -1,4 +1,24 @@
+import 'dart:developer';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:gupo_carro/model/CarModel.dart';
+import 'package:gupo_carro/model/GasStatsModel.dart';
+import 'package:gupo_carro/model/OdometerModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:uuid/uuid.dart';
+
+class _AcceptGas {
+  String name;
+  bool accept;
+  final TextEditingController textEditingController = TextEditingController();
+
+  double getRate() {
+    return double.parse(textEditingController.text);
+  }
+
+  _AcceptGas(this.name, this.accept);
+}
 
 class CadastroVeiculo extends StatefulWidget {
   const CadastroVeiculo({Key? key}) : super(key: key);
@@ -8,16 +28,40 @@ class CadastroVeiculo extends StatefulWidget {
 }
 
 class _CadastroVeiculoState extends State<CadastroVeiculo> {
-  final TextEditingController _textEditingController = TextEditingController(); //instanciar o objeto para controlar o campo de texto
-  bool _gasolina = false;
-  bool _alcool = false;
-  bool _diesel = false;
+  //instanciar o objeto para controlar o campo de texto
+  final List<_AcceptGas> _gasTypes = [
+    _AcceptGas("Gasolina", false),
+    _AcceptGas("Etanol", false),
+    _AcceptGas("Diesel", false)
+  ];
 
-  var teste = {
-    "Gasolina": {"accept": false, "rate": 0},
-    "Etanol": {"accept": false, "rate": 0},
-    "Diesel": {"accept": false, "rate": 0}
-  };
+  final TextEditingController _nicknameEditingController =
+      TextEditingController();
+  final TextEditingController _plateEditingController = TextEditingController();
+  final TextEditingController _odometerEditingController =
+      TextEditingController();
+  
+  // _salvarDados() async {
+  //   String valorDigitado = _textEditingController.text;
+  //   final prefs = await SharedPreferences.getInstance();
+  //   await prefs.setString(
+  //       "nome", valorDigitado); // a chave será usada para recuperar dados
+  //   print("Operação salvar: $valorDigitado");
+  // }
+
+  // _recuperarDados() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   // setState(() {
+  //   //   _textoSalvo = prefs.getString("nome") ?? "Sem valor";
+  //   // });
+  //   print("Operação recuperar: ");
+  // }
+
+  // _removerDados() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   prefs.remove("nome");
+  //   // print("Operação remover");
+  // }
 
   // Initial Selected Value
   String dropdownvalue = 'Selecione o veículo';
@@ -66,149 +110,135 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
       ),
       body: Column(
         children: <Widget>[
-          DropdownButton(
-            // Initial Value
-            value: dropdownvalue,
+          Row(
+            children: [
+              DropdownButton(
+                // Initial Value
+                value: dropdownvalue,
 
-            // Down Arrow Icon
-            icon: const Icon(Icons.keyboard_arrow_down),
+                // Down Arrow Icon
+                icon: const Icon(Icons.keyboard_arrow_down),
 
-            // Array list of items
-            items: items.map((String items) {
-              return DropdownMenuItem(
-                value: items,
-                child: Text(items),
-              );
-            }).toList(),
-            // After selecting the desired option,it will
-            // change button value to selected value
-            onChanged: (String? newValue) {
-              setState(() {
-                dropdownvalue = newValue ?? "Selecione o veículo";
-              });
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.all(32),
-            child: TextField(
-              keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: "Quantidade de Km/L: "),
-              style: const TextStyle(
-                fontSize: 18,
+                // Array list of items
+                items: items.map((String items) {
+                  return DropdownMenuItem(
+                    value: items,
+                    child: Text(items),
+                  );
+                }).toList(),
+                // After selecting the desired option,it will
+                // change button value to selected value
+                onChanged: (String? newValue) {
+                  setState(() {
+                    dropdownvalue = newValue ?? "Selecione o veículo";
+                  });
+                },
               ),
-              controller:
-                  _textEditingController, //controlador do nosso campo de texto
+            ],
+            mainAxisAlignment: MainAxisAlignment.center,
+          ),
+          TextField(
+            keyboardType: TextInputType.text,
+            decoration: const InputDecoration(labelText: "Apelido do carro"),
+            style: const TextStyle(
+              fontSize: 18,
             ),
+            controller:
+                _nicknameEditingController, //controlador do nosso campo de texto
           ),
-          const Text(
-            'Combustíveis Aceitos',
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+          TextField(
+            keyboardType: TextInputType.text,
+            decoration: const InputDecoration(labelText: "Placa"),
+            style: const TextStyle(
+              fontSize: 18,
+            ),
+            controller:
+                _plateEditingController, //controlador do nosso campo de texto
           ),
-          CheckboxListTile(
-              title: const Text("Gasolina"),
-              value: _gasolina,
-              onChanged: (bool? valor) {
-                setState(() {
-                  _gasolina = valor ?? false;
-                });
-              }),
-          CheckboxListTile(
-              title: const Text("Alcool"),
-              value: _alcool,
-              onChanged: (bool? valor) {
-                setState(() {
-                  _alcool = valor ?? false;
-                });
-              }),
-          CheckboxListTile(
-              title: const Text("Diesel"),
-              value: _diesel,
-              onChanged: (bool? valor) {
-                setState(() {
-                  _diesel = valor ?? false;
-                });
-              }),
+          TextField(
+            keyboardType: TextInputType.number,
+            decoration: const InputDecoration(labelText: "Km rodados"),
+            style: const TextStyle(
+              fontSize: 18,
+            ),
+            controller:
+                _odometerEditingController, //controlador do nosso campo de texto
+          ),
+          Column(
+            children: [
+              const Text(
+                'Combustíveis Aceitos',
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+              ),
+              Column(
+                  children:
+                      _gasTypes.map((type) => buildGasTypeThing(type)).toList())
+            ],
+          ),
           ElevatedButton(
             child: const Text("Adicionar"),
             style: ElevatedButton.styleFrom(
               primary: Colors.green,
             ),
             onPressed: () {
-              Navigator.pop(context);
+              log(convertToCarModel().gasStats![0].toString());
             },
           ),
         ],
       ),
     );
   }
-}
 
-//
-// class EntradaCheckBox extends StatefulWidget {
-//   @override
-//   _EntradaCheckBoxState createState() => _EntradaCheckBoxState();
-// }
-//
-// class _EntradaCheckBoxState extends State<EntradaCheckBox> {
-//   bool _gasolina = false;
-//   bool _alcool = false;
-//   bool _diesel = false;
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text("Cadastro de veículo:"),
-//       ),
-//       body: Container(
-//         child: Row(
-//           children: <Widget>[
-//             CheckboxListTile(
-//                 title: Text("Gasolina"),
-//
-//                 value: _gasolina,
-//                 onChanged: (bool valor){
-//                   setState(() {
-//                     _gasolina = valor;
-//                   });
-//                 }
-//             ),
-//             CheckboxListTile(
-//                 title: Text("Alcool"),
-//
-//                 value: _alcool,
-//                 onChanged: (bool valor){
-//                   setState(() {
-//                     _alcool = valor;
-//                   });
-//                 }
-//             ),
-//             CheckboxListTile(
-//                 title: Text("Diesel"),
-//
-//                 value: _diesel,
-//                 onChanged: (bool valor){
-//                   setState(() {
-//                     _diesel = valor;
-//                   });
-//                 }
-//             ),
-//             ElevatedButton(
-//                 child: Text("Salvar"),
-//                 onPressed: (){
-//                   print(
-//                       " Gasolina: " +_gasolina.toString() +
-//                           " Alcool: " +_alcool.toString() +
-//                           " Diesel: " +_diesel.toString()
-//                   );
-//                 }
-//             ),
-//
-//           ],
-//         ),
-//
-//       ),
-//     );
-//   }
-// }
+  Widget buildGasTypeThing(_AcceptGas thing) {
+    return Row(
+      children: [
+        Expanded(
+          child: CheckboxListTile(
+              title: Text(thing.name),
+              value: thing.accept,
+              onChanged: (bool? valor) {
+                setState(() {
+                  thing.accept = valor ?? false;
+                });
+              }),
+        ),
+        Expanded(
+          child: TextField(
+            readOnly: !thing.accept,
+            keyboardType: TextInputType.number,
+            decoration:
+                const InputDecoration(labelText: "Quantidade de Km/L: "),
+            style: const TextStyle(
+              fontSize: 18,
+            ),
+            controller: thing
+                .textEditingController, //controlador do nosso campo de texto
+          ),
+        )
+      ],
+    );
+  }
+
+  CarModel convertToCarModel() {
+    var uuid = Uuid();
+    List<GasStatsModel> gasStats = [];
+
+    for (var t in _gasTypes) {
+      if (t.accept) {
+        gasStats.add(GasStatsModel(gasType: t.name, rate: t.getRate()));
+      }
+    }
+
+    return CarModel(
+        id: uuid.v4(),
+        nickname: _nicknameEditingController.text,
+        plate: _plateEditingController.text,
+        odometer: _odometerEditingController.text != ""
+            ? OdometerModel(value: int.parse(_odometerEditingController.text))
+            : null,
+        modelo: dropdownvalue,
+        gasStats: gasStats);
+  }
+}
