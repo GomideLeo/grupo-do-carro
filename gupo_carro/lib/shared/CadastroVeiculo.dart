@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:gupo_carro/model/CarModel.dart';
 import 'package:gupo_carro/model/GasStatsModel.dart';
 import 'package:gupo_carro/model/OdometerModel.dart';
+import 'package:gupo_carro/views/HomePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
+
+import '../views/CarView.dart';
 
 class _AcceptGas {
   String name;
@@ -14,7 +17,9 @@ class _AcceptGas {
   final TextEditingController textEditingController = TextEditingController();
 
   double getRate() {
-    return double.parse(textEditingController.text);
+    return textEditingController.text != ""
+        ? double.parse(textEditingController.text)
+        : 0;
   }
 
   _AcceptGas(this.name, this.accept);
@@ -40,28 +45,6 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
   final TextEditingController _plateEditingController = TextEditingController();
   final TextEditingController _odometerEditingController =
       TextEditingController();
-  
-  // _salvarDados() async {
-  //   String valorDigitado = _textEditingController.text;
-  //   final prefs = await SharedPreferences.getInstance();
-  //   await prefs.setString(
-  //       "nome", valorDigitado); // a chave será usada para recuperar dados
-  //   print("Operação salvar: $valorDigitado");
-  // }
-
-  // _recuperarDados() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   // setState(() {
-  //   //   _textoSalvo = prefs.getString("nome") ?? "Sem valor";
-  //   // });
-  //   print("Operação recuperar: ");
-  // }
-
-  // _removerDados() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   prefs.remove("nome");
-  //   // print("Operação remover");
-  // }
 
   // Initial Selected Value
   String dropdownvalue = 'Selecione o veículo';
@@ -183,7 +166,16 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
               primary: Colors.green,
             ),
             onPressed: () {
-              log(convertToCarModel().gasStats![0].toString());
+              CarModel carModel = convertToCarModel();
+              carModel.saveToSharedPreferences();
+              Navigator.popUntil(context, (route) => false);
+
+              // Navigator.pop(context);
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => const HomePage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CarView(carModel)));
+              // CarModel.getFromSharedPreferences().then((value) => log(value![0].toString()));
             },
           ),
         ],
@@ -191,29 +183,29 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
     );
   }
 
-  Widget buildGasTypeThing(_AcceptGas thing) {
+  Widget buildGasTypeThing(_AcceptGas gasType) {
     return Row(
       children: [
         Expanded(
           child: CheckboxListTile(
-              title: Text(thing.name),
-              value: thing.accept,
+              title: Text(gasType.name),
+              value: gasType.accept,
               onChanged: (bool? valor) {
                 setState(() {
-                  thing.accept = valor ?? false;
+                  gasType.accept = valor ?? false;
                 });
               }),
         ),
         Expanded(
           child: TextField(
-            readOnly: !thing.accept,
+            readOnly: !gasType.accept,
             keyboardType: TextInputType.number,
             decoration:
                 const InputDecoration(labelText: "Quantidade de Km/L: "),
             style: const TextStyle(
               fontSize: 18,
             ),
-            controller: thing
+            controller: gasType
                 .textEditingController, //controlador do nosso campo de texto
           ),
         )
@@ -235,10 +227,10 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
         id: uuid.v4(),
         nickname: _nicknameEditingController.text,
         plate: _plateEditingController.text,
+        modelo: dropdownvalue,
         odometer: _odometerEditingController.text != ""
             ? OdometerModel(value: int.parse(_odometerEditingController.text))
             : null,
-        modelo: dropdownvalue,
         gasStats: gasStats);
   }
 }

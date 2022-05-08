@@ -15,5 +15,14 @@ class GasStatsModel {
         volumeUnit;
   }
 
+  Object toObject() {
+    return {
+      "gasType": gasType,
+      "rate": rate,
+      "distanceUnit": distanceUnit,
+      "volumeUnit": volumeUnit
+    };
+  }
+
   GasStatsModel({required this.gasType, this.rate=0, this.distanceUnit="km", this.volumeUnit="L"});
 }

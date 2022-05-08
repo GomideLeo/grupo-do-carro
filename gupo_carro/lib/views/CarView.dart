@@ -28,7 +28,6 @@ class _CarViewState extends State<CarView> {
 
   @override
   Widget build(BuildContext context) {
-    AppData appData = AppData.of(context);
 
     _telas = [
       Center(

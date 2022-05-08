@@ -8,48 +8,13 @@ import 'package:gupo_carro/views/HomePage.dart';
 
 void main() async {
 
-
+  
   runApp(const App());
 }
 
 
-class App extends StatefulWidget {
+class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
-
-  @override
-  AppState createState() => AppState();
-}
-
-class AppState extends State<App> {
-  int selected = 0;
-  List<CarModel> carList = List<CarModel>.empty();
-
-  _get() async {
-    var res = 'Resposta do back end';//await http.get('request URL');
-    // tratamento dados back end
-    // seta dados para serem utilizados
-    setState(() => selected = 0);
-    setState(() => carList = List<CarModel>.empty());
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _get();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AppData(
-      selected: -1,
-      carList: List<CarModel>.empty(),
-      child: const IntermediateApp(),
-    );
-  }
-}
-
-class IntermediateApp extends StatelessWidget {
-  const IntermediateApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -65,3 +30,37 @@ class IntermediateApp extends StatelessWidget {
     );
   }
 }
+
+// class AppState extends State<App> {
+//   int selected = 0;
+//   List<CarModel> carList = List<CarModel>.empty();
+  
+//   _get() async {
+//     var res = 'Resposta do back end';//await http.get('request URL');
+//     // tratamento dados back end
+//     // seta dados para serem utilizados
+//     setState(() => selected = 0);
+//     setState(() => carList = List<CarModel>.empty());
+//   }
+  
+//   @override
+//   void initState() {
+//     super.initState();
+//     _get();
+//   }
+  
+//   @override
+//   Widget build(BuildContext context) {
+//     return AppData(
+//       selected: -1,
+//       carList: List<CarModel>.empty(),
+//       child: const IntermediateApp(),
+//     );
+//   }
+// }
+
+// class IntermediateApp extends StatelessWidget {
+//   const IntermediateApp({Key? key}) : super(key: key);
+
+  
+// }

@@ -9,12 +9,11 @@ import 'package:gupo_carro/model/CarModel.dart';
 import 'package:gupo_carro/views/CarView.dart';
 
 class SelecionarCarro extends StatelessWidget {
-  List<CarModel> carsList = [];
-
+  
   @override
   Widget build(BuildContext context) {
-    AppData appData = AppData.of(context);
-    carsList = appData.carList;
+    
+    
     return Container(
       child: Row(
         children: [
@@ -31,35 +30,61 @@ class SelecionarCarro extends StatelessWidget {
 
   List<Widget> buildComponent(BuildContext context) {
     List<Widget> children = [];
-
-    children.addAll(carsList.map((car) {
-      return OutlinedButton(
-        onPressed: (() {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => CarView(car)),
-          );
-        }),
-        child: CarData(car,
-            showPhoto: true, showOdometer: true, showGasStats: false),
-      );
-    }));
+    
+    children.add(getCarSelection(context));
     children.add(
       OutlinedButton(
         onPressed: (() {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CadastroVeiculo()),
+            MaterialPageRoute(builder: (context) => const CadastroVeiculo()),
           );
         }),
         style: ButtonStyle(
           padding:
               MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(16.0)),
         ),
-        child: Text("Adicionar Carro"),
+        child: const Text("Adicionar Carro"),
       ),
     );
 
     return children;
+  }
+
+  Widget getCarSelection(BuildContext context) {
+    return FutureBuilder<List<CarModel>?>(
+        future: CarModel.getFromSharedPreferences(),
+        builder:
+            (BuildContext context, AsyncSnapshot<List<CarModel>?> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: Text('Please wait its loading...'));
+          } else {
+            if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else {
+              return Column(
+                  children: snapshot.data
+                          ?.map((e) => getCarWidget(context, e))
+                          .toList() ??
+                      []);
+            } // snapshot.data  :- get your object which is pass from your downloadData() function
+          }
+        });
+  }
+
+  Widget getCarWidget(BuildContext context, CarModel car) {
+    return OutlinedButton(
+      onPressed: (() {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => CarView(car)),
+        );
+      }),
+      child: SizedBox(
+        child: CarData(car,
+            showPhoto: true, showOdometer: true, showGasStats: false),
+        width: 200,
+      ),
+    );
   }
 }

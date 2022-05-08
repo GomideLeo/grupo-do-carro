@@ -10,7 +10,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AppData appData = AppData.of(context);
+    // AppData appData = AppData.of(context);
     
     // verificação de primeiro login
     // if (appData!.carList.isEmpty) {
@@ -20,7 +20,7 @@ class HomePage extends StatelessWidget {
     //   Navigator.pushNamed(context, '/car/select');
     // }
 
-    CarModel selectedCar = appData.carList[appData.selected];
+    // CarModel selectedCar = appData.carList![appData.selected];
 
     return Scaffold(
       appBar: AppBar(
