@@ -51,6 +51,27 @@ class ManutencaoDB {
     });
   }
 
+  Future<List<ManutencaoModel>> manutencoesCarro(int carId) async {
+    final db = await manutencaoDB;
+
+    final List<Map<String, dynamic>> maps = await db.query('Manutencao', where: 'idCarro = ?', whereArgs: [carId]);
+    final List<Map<String, dynamic>> mapsType = await db.query('ManutencaoType');
+
+    return List.generate(maps.length, (i) {
+      return ManutencaoModel(
+        id: maps[i]['id'],
+        idCarro: maps[i]['idCarro'],
+        type: maps[i]['manType'],
+        typeName: mapsType[maps[i]['manType']]['name'],
+        data: DateTime.parse(maps[i]['data']),
+        preco: maps[i]['preco'],
+        odometro: maps[i]['odometro'],
+        dataProximo: DateTime.tryParse(maps[i]['dataProximo']),
+        odometroProximo: maps[i]['odometroProximo'],
+      );
+    });
+  }
+
   Future<List<TypeModel>> manutencaoTypes() async {
     final db = await manutencaoDB;
 

@@ -17,9 +17,9 @@ class MaintListaState extends State<MaintLista>{
   //Gera itens para preencher a lista. Será removido no futuro.
   Future<void> insertItems() async{
 
-    for(int i=0; i<=1; i++){
+    for(int i=0; i<=50; i++){
       int id = -1;
-      int idCarro = 0;
+      int idCarro = Random().nextInt(2);
       int type = 1;
       DateTime data = DateTime.now();
       int preco = 12000;
@@ -43,7 +43,7 @@ class MaintListaState extends State<MaintLista>{
 
   void loadItems() async{
     await insertItems();
-    List<ManutencaoModel> _items = await mdb.manutencoes();
+    List<ManutencaoModel> _items = await mdb.manutencoesCarro(0);
     setState((){
       items  = _items;
     });
@@ -59,8 +59,6 @@ class MaintListaState extends State<MaintLista>{
   //Constrói o Widget de lista de manutenção
   @override
   Widget build(BuildContext context){
-    insertItems();
-    loadItems();
     return Scaffold(
       body: Container(
         child: ListView.separated(
