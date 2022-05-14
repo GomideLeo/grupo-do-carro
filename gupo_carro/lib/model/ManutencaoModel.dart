@@ -24,11 +24,11 @@ class ManutencaoModel {
   Map<String, dynamic> toMap() {
     return {
       'idCarro': idCarro,
-      'type': type,
-      'data': data,
+      'manType': type,
+      'data': data.toIso8601String(),
       'preco': preco,
       'odometro': odometro,
-      'dataProximo': dataProximo,
+      'dataProximo': dataProximo?.toIso8601String(),
       'odometroProximo': odometroProximo,
     };
   }

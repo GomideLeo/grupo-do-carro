@@ -1,6 +1,7 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:gupo_carro/model/ManutencaoDB.dart';
+import 'package:gupo_carro/model/ManutencaoModel.dart';
 
 class MaintLista extends StatefulWidget{
   @override
@@ -9,23 +10,56 @@ class MaintLista extends StatefulWidget{
 
 class MaintListaState extends State<MaintLista>{
 
-  List items = [];
+  List<ManutencaoModel> items = [];
+  ManutencaoDB mdb = ManutencaoDB();
+
 
   //Gera itens para preencher a lista. Será removido no futuro.
-  void loadItems(){
-    items = [];
-    for(int i=0; i<=50; i++){
-      Map<String, dynamic> item = Map();
-      item["MaintType"] = "Troca de óleo";
-      item["Odometer"]=Random().nextInt(100000).toString()+" KM";
-      item["Description"] = "Descrição da troca de óleo no. ${i}";
-      items.add(item);
+  Future<void> insertItems() async{
+
+    for(int i=0; i<=1; i++){
+      int id = -1;
+      int idCarro = 0;
+      int type = 1;
+      DateTime data = DateTime.now();
+      int preco = 12000;
+      int odometro = Random().nextInt(1000000);
+      DateTime dataProx = DateTime.now();
+      int odometroProx = odometro + 50000;
+
+      ManutencaoModel item = ManutencaoModel(
+          id: id,
+          idCarro: idCarro,
+          type: type,
+          typeName: "Troca de óleo",
+          data: data,
+          preco: preco,
+          odometro: odometro,
+          dataProximo: dataProx,
+          odometroProximo: odometroProx);
+      await mdb.insertManutencao(item);
     }
   }
+
+  void loadItems() async{
+    await insertItems();
+    List<ManutencaoModel> _items = await mdb.manutencoes();
+    setState((){
+      items  = _items;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadItems();
+  }
+
 
   //Constrói o Widget de lista de manutenção
   @override
   Widget build(BuildContext context){
+    insertItems();
     loadItems();
     return Scaffold(
       body: Container(
@@ -37,11 +71,11 @@ class MaintListaState extends State<MaintLista>{
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children:[
-                Text(items[index]["MaintType"]),
-                Text(items[index]["Odometer"])
+                Text(items[index].typeName),
+                Text(items[index].odometro.toString())
                 ]
             ),
-            subtitle: Text(items[index]["Description"]),
+            subtitle: Text(items[index].preco.toString()),
             );
           },
           separatorBuilder: (context, index) => const Divider()

@@ -40,12 +40,12 @@ class ManutencaoDB {
       return ManutencaoModel(
         id: maps[i]['id'],
         idCarro: maps[i]['idCarro'],
-        type: maps[i]['type'],
-        typeName: mapsType[maps[i]['type']]['name'],
-        data: maps[i]['data'],
+        type: maps[i]['manType'],
+        typeName: mapsType[maps[i]['manType']]['name'],
+        data: DateTime.parse(maps[i]['data']),
         preco: maps[i]['preco'],
         odometro: maps[i]['odometro'],
-        dataProximo: maps[i]['dataProximo'],
+        dataProximo: DateTime.tryParse(maps[i]['dataProximo']),
         odometroProximo: maps[i]['odometroProximo'],
       );
     });
@@ -121,11 +121,11 @@ class DBOpener {
             """CREATE TABLE IF NOT EXISTS Manutencao (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             idCarro INTEGER NOT NULL,
-            data DATE NOT NULL,
+            data TEXT NOT NULL,
             manType INTEGER NOT NULL,
             odometro INTEGER,
             preco INTEGER,
-            dataProximo DATE,
+            dataProximo TEXT,
             odometroProximo INTEGER,
             FOREIGN KEY(manType) REFERENCES ManutencaoType(id)
           );"""
