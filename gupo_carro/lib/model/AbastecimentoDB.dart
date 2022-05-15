@@ -35,6 +35,7 @@ class AbastecimentoDB {
         combustivel: mapsType[maps[i]['type']]['name'],
         quantidadeLitros: maps[i]['quantidadeLitros'],
         preco: maps[i]['preco'],
+        odometro: maps [i] ['odometro'],
       );
     });
   }
@@ -90,7 +91,8 @@ class DBOpener {
             data DATE NOT NULL,
             combustivelType INTEGER NOT NULL,
             quantidadeLitros INTEGER NOT NULL,
-            preco INTEGER NOT NULL
+            preco INTEGER NOT NULL,
+            odometro INTEGER NOT NULL
             FOREIGN KEY(combustivelType) REFERENCES CombustivelType(id)
           );"""
         );

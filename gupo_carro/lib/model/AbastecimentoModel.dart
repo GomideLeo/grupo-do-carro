@@ -6,6 +6,7 @@ class AbastecimentoModel {
   String combustivel;
   int preco;
   int quantidadeLitros;
+  int odometro;
 
   AbastecimentoModel({
     required this.id,
@@ -14,7 +15,8 @@ class AbastecimentoModel {
     required this.combustivelType,
     required this.combustivel,
     required this.preco,
-    required this.quantidadeLitros
+    required this.quantidadeLitros,
+    required this.odometro,
   });
 
   Map<String, dynamic> toMap() {
@@ -24,6 +26,7 @@ class AbastecimentoModel {
       'combustivelType': combustivelType,
       'preco': preco,
       'quantidadeLitros': quantidadeLitros,
+      'odometro' : odometro,
     };
   }
 }
