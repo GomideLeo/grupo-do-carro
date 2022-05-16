@@ -23,28 +23,6 @@ class CarModel {
       this.odometer,
       this.gasStats});
 
-  // _salvarDados() async {
-  //   String valorDigitado = _textEditingController.text;
-  //   final prefs = await SharedPreferences.getInstance();
-  //   await prefs.setString(
-  //       "nome", valorDigitado); // a chave será usada para recuperar dados
-  //   print("Operação salvar: $valorDigitado");
-  // }
-
-  // _recuperarDados() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   // setState(() {
-  //   //   _textoSalvo = prefs.getString("nome") ?? "Sem valor";
-  //   // });
-  //   print("Operação recuperar: ");
-  // }
-
-  // _removerDados() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   prefs.remove("nome");
-  //   // print("Operação remover");
-  // }
-
   Object toObject() {
     return {
       "id": id,

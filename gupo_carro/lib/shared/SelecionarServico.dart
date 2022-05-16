@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:gupo_carro/gasolina/Abastecimento.dart';
 import 'package:gupo_carro/gasolina/postosPerto.dart';
+import 'package:gupo_carro/model/CarModel.dart';
 import 'package:gupo_carro/oleo/InfoOleo.dart';
 import 'package:gupo_carro/shared/CadastroVeiculo.dart';
 import 'package:gupo_carro/shared/CarStats.dart';
@@ -13,12 +15,13 @@ class _Opcao {
 }
 
 class SelecionarServico extends StatefulWidget {
-  final dropOpcoes = [
+  CarModel car;
+
+  var dropOpcoes = [
     _Opcao('Escolha', null),
-    _Opcao("Óleo", InfoOleo()),
-    _Opcao("Abastecimento", SelecionarCarro()),
-    _Opcao("Manutencao", InfoOleo()),
   ];
+
+  SelecionarServico(this.car, {Key? key}) : super(key: key);
 
   @override
   _SelecionarServicoState createState() => _SelecionarServicoState();
@@ -27,6 +30,12 @@ class SelecionarServico extends StatefulWidget {
 class _SelecionarServicoState extends State<SelecionarServico> {
   @override
   Widget build(BuildContext context) {
+    widget.dropOpcoes.addAll([
+      _Opcao("Óleo", InfoOleo()),
+      _Opcao("Abastecimento", Abastecimento(widget.car)),
+      _Opcao("Manutencao", InfoOleo())
+    ]);
+
     ValueNotifier<_Opcao> _dropValue =
         ValueNotifier(widget.dropOpcoes.elementAt(0));
     int _selectedValue = 0;

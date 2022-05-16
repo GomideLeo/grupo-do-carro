@@ -1,11 +1,13 @@
+import 'dart:ffi';
+
 class AbastecimentoModel {
   int id;
-  int idCarro;
+  String idCarro;
   DateTime data;
   int combustivelType;
   String combustivel;
-  int preco;
-  int quantidadeLitros;
+  double preco;
+  double quantidadeLitros;
   int odometro;
 
   AbastecimentoModel({
@@ -22,10 +24,10 @@ class AbastecimentoModel {
   Map<String, dynamic> toMap() {
     return {
       'idCarro': idCarro,
-      'data': data,
+      'data': data.toIso8601String(),
       'combustivelType': combustivelType,
-      'preco': preco,
-      'quantidadeLitros': quantidadeLitros,
+      'preco': (preco*100).round(),
+      'quantidadeLitros': (quantidadeLitros*100).round(),
       'odometro' : odometro,
     };
   }

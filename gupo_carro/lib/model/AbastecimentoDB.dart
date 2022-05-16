@@ -1,4 +1,3 @@
-
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:flutter/widgets.dart';
@@ -24,7 +23,8 @@ class AbastecimentoDB {
     final db = await abastecimentoDB;
 
     final List<Map<String, dynamic>> maps = await db.query('Abastecimento');
-    final List<Map<String, dynamic>> mapsType = await db.query('CombustivelType');
+    final List<Map<String, dynamic>> mapsType =
+        await db.query('CombustivelType');
 
     return List.generate(maps.length, (i) {
       return AbastecimentoModel(
@@ -33,9 +33,9 @@ class AbastecimentoDB {
         data: maps[i]['data'],
         combustivelType: maps[i]['combustivelType'],
         combustivel: mapsType[maps[i]['type']]['name'],
-        quantidadeLitros: maps[i]['quantidadeLitros'],
-        preco: maps[i]['preco'],
-        odometro: maps [i] ['odometro'],
+        quantidadeLitros: maps[i]['quantidadeLitros']/100.0,
+        preco: maps[i]['preco']/100.0,
+        odometro: maps[i]['odometro'],
       );
     });
   }
@@ -61,43 +61,39 @@ class DBOpener {
       join(await getDatabasesPath(), 'MeusCarros.db'),
       // When the database is first created, create a table.
       onCreate: (db, version) {
-        db.execute(
-            """CREATE TABLE IF NOT EXISTS CombustivelType (
+        db.execute("""CREATE TABLE CombustivelType (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL
-          );"""
-        );
+          );""");
 
         db.insert(
-          'GasType',
+          'CombustivelType',
           {'name': 'Gasolina'},
           conflictAlgorithm: ConflictAlgorithm.replace,
         );
         db.insert(
-          'GasType',
+          'CombustivelType',
           {'name': 'Alcool'},
           conflictAlgorithm: ConflictAlgorithm.replace,
         );
         db.insert(
-          'GasType',
+          'CombustivelType',
           {'name': 'Diesel'},
           conflictAlgorithm: ConflictAlgorithm.replace,
         );
 
-        return db.execute(
-          """CREATE TABLE IF NOT EXISTS Abastecimento (
+        return db.execute("""CREATE TABLE Abastecimento (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            idCarro INTEGER NOT NULL,
-            data DATE NOT NULL,
+            idCarro TEXT NOT NULL,
+            data TEXT NOT NULL,
             combustivelType INTEGER NOT NULL,
             quantidadeLitros INTEGER NOT NULL,
-            preco INTEGER NOT NULL,
+            preco REAL NOT NULL,
             odometro INTEGER NOT NULL
             FOREIGN KEY(combustivelType) REFERENCES CombustivelType(id)
-          );"""
-        );
+          );""");
       },
-      version: 1,
+      version: 6,
     );
   }
 }

@@ -120,7 +120,7 @@ class DBOpener {
       // When the database is first created, create a table.
       onCreate: (db, version) {
         db.execute(
-            """CREATE TABLE IF NOT EXISTS ManutencaoType (
+            """CREATE TABLE ManutencaoType (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL
           );"""
@@ -139,9 +139,9 @@ class DBOpener {
 
         // Run the CREATE TABLE statement on the database.
         return db.execute(
-            """CREATE TABLE IF NOT EXISTS Manutencao (
+            """CREATE TABLE Manutencao (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-            idCarro INTEGER NOT NULL,
+            idCarro TEXT NOT NULL,
             data TEXT NOT NULL,
             manType INTEGER NOT NULL,
             odometro INTEGER,
@@ -152,7 +152,7 @@ class DBOpener {
           );"""
         );
       },
-      version: 1,
+      version: 3,
     );
   }
 }

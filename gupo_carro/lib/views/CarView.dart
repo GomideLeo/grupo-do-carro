@@ -55,8 +55,8 @@ class _CarViewState extends State<CarView> {
           ],
         ),
       ),
-      SelecionarServico(),
-      MaintLista()
+      SelecionarServico(widget.car),
+      MaintLista(widget.car)
     ];
 
     return Scaffold(

@@ -77,7 +77,7 @@ class _PostosPertoState extends State<PostosPerto> {
                   appBar: AppBar(
                     title: Text(widget.car.nickname),
                   ),
-                  body: SelecionarServico(),
+                  body: SelecionarServico(widget.car),
                 ),
               ),
             );
@@ -97,7 +97,7 @@ class _PostosPertoState extends State<PostosPerto> {
                     appBar: AppBar(
                       title: Text(widget.car.nickname),
                     ),
-                    body: SelecionarServico(),
+                    body: SelecionarServico(widget.car),
                   ),
                 ),
               );

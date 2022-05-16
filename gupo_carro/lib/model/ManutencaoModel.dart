@@ -1,6 +1,6 @@
 class ManutencaoModel {
   int id;
-  int idCarro;
+  String idCarro;
   int type;
   String typeName;
   DateTime data;

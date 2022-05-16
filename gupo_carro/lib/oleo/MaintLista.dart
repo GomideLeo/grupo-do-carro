@@ -1,9 +1,14 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:gupo_carro/model/CarModel.dart';
 import 'package:gupo_carro/model/ManutencaoDB.dart';
 import 'package:gupo_carro/model/ManutencaoModel.dart';
 
 class MaintLista extends StatefulWidget{
+  CarModel car;
+
+  MaintLista(this.car);
+
   @override
   MaintListaState createState() => MaintListaState();
 }
@@ -29,7 +34,7 @@ class MaintListaState extends State<MaintLista>{
 
       ManutencaoModel item = ManutencaoModel(
           id: id,
-          idCarro: idCarro,
+          idCarro: widget.car.id,
           type: type,
           typeName: "Troca de óleo",
           data: data,
