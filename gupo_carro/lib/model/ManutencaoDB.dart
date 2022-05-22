@@ -51,7 +51,7 @@ class ManutencaoDB {
     });
   }
 
-  Future<List<ManutencaoModel>> manutencoesCarro(int carId) async {
+  Future<List<ManutencaoModel>> manutencoesCarro(String carId) async {
     final db = await manutencaoDB;
 
     final List<Map<String, dynamic>> maps = await db.query('Manutencao', where: 'idCarro = ?', whereArgs: [carId]);

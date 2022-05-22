@@ -24,7 +24,7 @@ class MaintListaState extends State<MaintLista>{
 
     for(int i=0; i<=50; i++){
       int id = -1;
-      int idCarro = Random().nextInt(2);
+      String idCarro = widget.car.id;
       int type = 1;
       DateTime data = DateTime.now();
       int preco = 12000;
@@ -34,7 +34,7 @@ class MaintListaState extends State<MaintLista>{
 
       ManutencaoModel item = ManutencaoModel(
           id: id,
-          idCarro: widget.car.id,
+          idCarro: idCarro,
           type: type,
           typeName: "Troca de óleo",
           data: data,
@@ -48,7 +48,7 @@ class MaintListaState extends State<MaintLista>{
 
   void loadItems() async{
     await insertItems();
-    List<ManutencaoModel> _items = await mdb.manutencoesCarro(0);
+    List<ManutencaoModel> _items = await mdb.manutencoesCarro(widget.car.id);
     setState((){
       items  = _items;
     });
