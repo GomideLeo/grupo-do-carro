@@ -80,7 +80,7 @@ class _AbastecimentoState extends State<Abastecimento> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
           Padding(
-            padding: EdgeInsets.all(32),
+            padding: EdgeInsets.all(10),
             child: TextField(
               keyboardType: TextInputType.number,
               decoration: InputDecoration(labelText: "Litros: "),
@@ -90,7 +90,7 @@ class _AbastecimentoState extends State<Abastecimento> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(32),
+            padding: EdgeInsets.all(10),
             child: TextField(
               keyboardType: TextInputType.number,
               decoration: InputDecoration(labelText: "Preço por litro: "),
@@ -100,7 +100,7 @@ class _AbastecimentoState extends State<Abastecimento> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.all(10),
           ),
           Text("Combustível atual do abastecimento "),
           RadioListTile<String>(
@@ -134,7 +134,7 @@ class _AbastecimentoState extends State<Abastecimento> {
             },
           ),
           Padding(
-            padding: EdgeInsets.all(32),
+            padding: EdgeInsets.all(10),
             child: TextField(
               keyboardType: TextInputType.number,
               decoration: InputDecoration(labelText: "Odômetro: "),

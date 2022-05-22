@@ -56,9 +56,10 @@ class _SelecionarServicoState extends State<SelecionarServico> {
                         widget.dropOpcoes.elementAt(_selectedValue);
                   },
                   items: buildDropdown(),
-                ),SingleChildScrollView(child: _dropValue.value.screen ??
-                    Text("Escolha uma opção"),)
-                
+                ),
+                SingleChildScrollView(
+                  child: _dropValue.value.screen ?? Text("Escolha uma opção"),
+                )
               ],
             );
           },

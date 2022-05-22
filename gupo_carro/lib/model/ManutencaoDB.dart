@@ -19,7 +19,7 @@ class ManutencaoDB {
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
-
+  
   Future<void> insertManutencaoType(TypeModel manutencaoTM) async {
     final db = await manutencaoDB;
 

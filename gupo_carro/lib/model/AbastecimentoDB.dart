@@ -58,7 +58,7 @@ class DBOpener {
   static Future<Database> getDatabase() async {
     WidgetsFlutterBinding.ensureInitialized();
     return openDatabase(
-      join(await getDatabasesPath(), 'MeusCarros.db'),
+      join(await getDatabasesPath(), 'Abastecimento.db'),
       // When the database is first created, create a table.
       onCreate: (db, version) {
         db.execute("""CREATE TABLE CombustivelType (
@@ -89,11 +89,11 @@ class DBOpener {
             combustivelType INTEGER NOT NULL,
             quantidadeLitros INTEGER NOT NULL,
             preco REAL NOT NULL,
-            odometro INTEGER NOT NULL
+            odometro INTEGER NOT NULL,
             FOREIGN KEY(combustivelType) REFERENCES CombustivelType(id)
           );""");
       },
-      version: 6,
+      version: 3,
     );
   }
 }
