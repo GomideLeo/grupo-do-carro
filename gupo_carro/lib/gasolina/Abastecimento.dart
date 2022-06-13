@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:gupo_carro/model/AbastecimentoModel.dart';
 import 'package:gupo_carro/model/AbastecimentoDB.dart';
@@ -19,7 +17,7 @@ class _AbastecimentoState extends State<Abastecimento> {
   String _selecionado = "-1";
   List<RadioListTile<String>> buttonItems = [
     RadioListTile<String>(
-      title: Text("Loading "),
+      title: const Text("Loading "),
       groupValue: " ",
       value: "-1",
       onChanged: (String? escolha) {},
@@ -69,42 +67,39 @@ class _AbastecimentoState extends State<Abastecimento> {
   final TextEditingController _precoEditingController = TextEditingController();
   final TextEditingController _odometroEditingController =
       TextEditingController();
-
+  
   @override
   Widget build(BuildContext context) {
-    return Container(
-        // appBar: AppBar(
-        //   title: Text("Abastecimento"),
-        // ),
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
+    return SingleChildScrollView(
+      child: Column(
+        // crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
           Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: TextField(
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: "Litros: "),
+              decoration: const InputDecoration(labelText: "Litros: "),
               
               controller:
                   _litrosEditingController, //controlador do nosso campo de texto
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: TextField(
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: "Preço por litro: "),
-              
+              decoration: const InputDecoration(labelText: "Preço por litro: "),
+
               controller:
                   _precoEditingController, //controlador do nosso campo de texto
             ),
           ),
-          Padding(
+          const Padding(
             padding: EdgeInsets.all(10),
           ),
-          Text("Combustível atual do abastecimento "),
+          const Text("Combustível atual do abastecimento "),
           RadioListTile<String>(
-            title: Text("Gasolina"),
+            title: const Text("Gasolina"),
             value: "1",
             groupValue: _selecionado,
             onChanged: (String? escolha) {
@@ -114,7 +109,7 @@ class _AbastecimentoState extends State<Abastecimento> {
             },
           ),
           RadioListTile<String>(
-            title: Text("Álcool"),
+            title: const Text("Álcool"),
             value: "2",
             groupValue: _selecionado,
             onChanged: (String? escolha) {
@@ -124,7 +119,7 @@ class _AbastecimentoState extends State<Abastecimento> {
             },
           ),
           RadioListTile<String>(
-            title: Text("Diesel"),
+            title: const Text("Diesel"),
             value: "3",
             groupValue: _selecionado,
             onChanged: (String? escolha) {
@@ -134,17 +129,17 @@ class _AbastecimentoState extends State<Abastecimento> {
             },
           ),
           Padding(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: TextField(
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: "Odômetro: "),
-              
+              decoration: const InputDecoration(labelText: "Odômetro: "),
+
               controller:
                   _odometroEditingController, //controlador do nosso campo de texto
             ),
           ),
           ElevatedButton(
-            child: Text("Adicionar"),
+            child: const Text("Adicionar"),
             style: ElevatedButton.styleFrom(
               primary: Colors.green,
             ),
@@ -167,7 +162,8 @@ class _AbastecimentoState extends State<Abastecimento> {
               print("Item selecionado: " + _selecionado);
             },
           ),
-        ] // <Widget> []
-            ));
+        ],
+      ),
+    );
   }
 }

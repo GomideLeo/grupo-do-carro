@@ -40,12 +40,12 @@ class _SelecionarServicoState extends State<SelecionarServico> {
         ValueNotifier(widget.dropOpcoes.elementAt(0));
     int _selectedValue = 0;
 
-    return Container(
-      child: Center(
-        child: ValueListenableBuilder<_Opcao>(
-          valueListenable: _dropValue,
-          builder: (BuildContext context, _Opcao chosenOption, _) {
-            return Column(
+    return Center(
+      child: ValueListenableBuilder<_Opcao>(
+        valueListenable: _dropValue,
+        builder: (BuildContext context, _Opcao chosenOption, _) {
+          return SingleChildScrollView(
+            child: Column(
               children: [
                 DropdownButton(
                   hint: const Text('Escolha a opção desejada'),
@@ -57,13 +57,13 @@ class _SelecionarServicoState extends State<SelecionarServico> {
                   },
                   items: buildDropdown(),
                 ),
-                SingleChildScrollView(
-                  child: _dropValue.value.screen ?? Text("Escolha uma opção"),
-                )
+                Container(
+                    child: _dropValue.value.screen ??
+                        const Text("Escolha uma opção")),
               ],
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

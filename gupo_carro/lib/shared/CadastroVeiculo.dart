@@ -91,94 +91,97 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
       appBar: AppBar(
         title: const Text("Cadastro de Veículo"),
       ),
-      body: Column(
-        children: <Widget>[
-          Row(
-            children: [
-              DropdownButton(
-                // Initial Value
-                value: dropdownvalue,
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Row(
+              children: [
+                DropdownButton(
+                  // Initial Value
+                  value: dropdownvalue,
 
-                // Down Arrow Icon
-                icon: const Icon(Icons.keyboard_arrow_down),
+                  // Down Arrow Icon
+                  icon: const Icon(Icons.keyboard_arrow_down),
 
-                // Array list of items
-                items: items.map((String items) {
-                  return DropdownMenuItem(
-                    value: items,
-                    child: Text(items),
-                  );
-                }).toList(),
-                // After selecting the desired option,it will
-                // change button value to selected value
-                onChanged: (String? newValue) {
-                  setState(() {
-                    dropdownvalue = newValue ?? "Selecione o veículo";
-                  });
-                },
+                  // Array list of items
+                  items: items.map((String items) {
+                    return DropdownMenuItem(
+                      value: items,
+                      child: Text(items),
+                    );
+                  }).toList(),
+                  // After selecting the desired option,it will
+                  // change button value to selected value
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      dropdownvalue = newValue ?? "Selecione o veículo";
+                    });
+                  },
+                ),
+              ],
+              mainAxisAlignment: MainAxisAlignment.center,
+            ),
+            TextField(
+              keyboardType: TextInputType.text,
+              decoration: const InputDecoration(labelText: "Apelido do carro"),
+              style: const TextStyle(
+                fontSize: 18,
               ),
-            ],
-            mainAxisAlignment: MainAxisAlignment.center,
-          ),
-          TextField(
-            keyboardType: TextInputType.text,
-            decoration: const InputDecoration(labelText: "Apelido do carro"),
-            style: const TextStyle(
-              fontSize: 18,
+              controller:
+                  _nicknameEditingController, //controlador do nosso campo de texto
             ),
-            controller:
-                _nicknameEditingController, //controlador do nosso campo de texto
-          ),
-          TextField(
-            keyboardType: TextInputType.text,
-            decoration: const InputDecoration(labelText: "Placa"),
-            style: const TextStyle(
-              fontSize: 18,
-            ),
-            controller:
-                _plateEditingController, //controlador do nosso campo de texto
-          ),
-          TextField(
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(labelText: "Km rodados"),
-            style: const TextStyle(
-              fontSize: 18,
-            ),
-            controller:
-                _odometerEditingController, //controlador do nosso campo de texto
-          ),
-          Column(
-            children: [
-              const Text(
-                'Combustíveis Aceitos',
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+            TextField(
+              keyboardType: TextInputType.text,
+              decoration: const InputDecoration(labelText: "Placa"),
+              style: const TextStyle(
+                fontSize: 18,
               ),
-              Column(
-                  children:
-                      _gasTypes.map((type) => buildGasTypeThing(type)).toList())
-            ],
-          ),
-          ElevatedButton(
-            child: const Text("Adicionar"),
-            style: ElevatedButton.styleFrom(
-              primary: Colors.green,
+              controller:
+                  _plateEditingController, //controlador do nosso campo de texto
             ),
-            onPressed: () {
-              CarModel carModel = convertToCarModel();
-              carModel.saveToSharedPreferences();
-              Navigator.popUntil(context, (route) => false);
+            TextField(
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(labelText: "Km rodados"),
+              style: const TextStyle(
+                fontSize: 18,
+              ),
+              controller:
+                  _odometerEditingController, //controlador do nosso campo de texto
+            ),
+            Column(
+              children: [
+                const Text(
+                  'Combustíveis Aceitos',
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
+                ),
+                Column(
+                    children: _gasTypes
+                        .map((type) => buildGasTypeThing(type))
+                        .toList())
+              ],
+            ),
+            ElevatedButton(
+              child: const Text("Adicionar"),
+              style: ElevatedButton.styleFrom(
+                primary: Colors.green,
+              ),
+              onPressed: () {
+                CarModel carModel = convertToCarModel();
+                carModel.saveToSharedPreferences();
+                Navigator.popUntil(context, (route) => false);
 
-              // Navigator.pop(context);
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => const HomePage()));
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => CarView(carModel)));
-              // CarModel.getFromSharedPreferences().then((value) => log(value![0].toString()));
-            },
-          ),
-        ],
+                // Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const HomePage()));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CarView(carModel)));
+                // CarModel.getFromSharedPreferences().then((value) => log(value![0].toString()));
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

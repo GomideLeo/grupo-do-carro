@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class AbastecimentoModel {
   int id;
   String idCarro;
