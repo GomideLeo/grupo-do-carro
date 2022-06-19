@@ -67,7 +67,7 @@ class _AbastecimentoState extends State<Abastecimento> {
   final TextEditingController _precoEditingController = TextEditingController();
   final TextEditingController _odometroEditingController =
       TextEditingController();
-  
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -78,8 +78,10 @@ class _AbastecimentoState extends State<Abastecimento> {
             padding: const EdgeInsets.all(10),
             child: TextField(
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: "Litros: "),
-              
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Litros',
+              ),
               controller:
                   _litrosEditingController, //controlador do nosso campo de texto
             ),
@@ -88,7 +90,10 @@ class _AbastecimentoState extends State<Abastecimento> {
             padding: const EdgeInsets.all(10),
             child: TextField(
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: "Preço por litro: "),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Preço por litro',
+              ),
 
               controller:
                   _precoEditingController, //controlador do nosso campo de texto
@@ -132,7 +137,10 @@ class _AbastecimentoState extends State<Abastecimento> {
             padding: const EdgeInsets.all(10),
             child: TextField(
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(labelText: "Odômetro: "),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Odômetro',
+              ),
 
               controller:
                   _odometroEditingController, //controlador do nosso campo de texto
@@ -141,7 +149,7 @@ class _AbastecimentoState extends State<Abastecimento> {
           ElevatedButton(
             child: const Text("Adicionar"),
             style: ElevatedButton.styleFrom(
-              primary: Colors.green,
+              primary: Color.fromARGB(255, 7, 132, 204),
             ),
             onPressed: () {
               //open database
