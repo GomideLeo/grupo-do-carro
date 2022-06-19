@@ -39,8 +39,7 @@ class _PostosPertoState extends State<PostosPerto> {
         children: [
           Column(
             children: buildComponent(),
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
           ),
         ],
         mainAxisAlignment: MainAxisAlignment.center,
@@ -62,13 +61,35 @@ class _PostosPertoState extends State<PostosPerto> {
         ),
       ),
     ));
-    children.addAll(
-      widget.postos.map((e) => OutlinedButton(
-          style: OutlinedButton.styleFrom(
-            side: const BorderSide(
-              color: Colors.transparent,
-            ),
-          ),
+    children.addAll(widget.postos.map(
+      (e) => Padding(
+          padding: const EdgeInsets.only(top: 13.0),
+          child: OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(
+                  color: Colors.transparent,
+                ),
+              ),
+              onPressed: (() {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Scaffold(
+                      appBar: AppBar(
+                        title: Text(widget.car.nickname),
+                      ),
+                      body: SelecionarServico(widget.car),
+                    ),
+                  ),
+                );
+              }),
+              child: PostoData(posto: e, gasTypes: widget.gasTypes))),
+    ));
+    // children.add(Butt)
+    children.add(
+      Padding(
+        padding: const EdgeInsets.only(top: 13.0),
+        child: ElevatedButton(
           onPressed: (() {
             Navigator.push(
               context,
@@ -82,27 +103,11 @@ class _PostosPertoState extends State<PostosPerto> {
               ),
             );
           }),
-          child: PostoData(posto: e, gasTypes: widget.gasTypes))),
-    );
-    // children.add(Butt)
-    children.add(
-      Padding(
-        padding: const EdgeInsets.only(top: 8.0),
-        child: OutlinedButton(
-            onPressed: (() {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Scaffold(
-                    appBar: AppBar(
-                      title: Text(widget.car.nickname),
-                    ),
-                    body: SelecionarServico(widget.car),
-                  ),
-                ),
-              );
-            }),
-            child: const Text("Inserir Manualmente")),
+          child: const Text("Inserir Manualmente"),
+          style: ElevatedButton.styleFrom(
+            minimumSize: Size(210, 40),
+          ),
+        ),
       ),
     );
     return children;

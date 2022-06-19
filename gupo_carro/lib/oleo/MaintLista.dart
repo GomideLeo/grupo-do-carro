@@ -4,7 +4,7 @@ import 'package:gupo_carro/model/CarModel.dart';
 import 'package:gupo_carro/model/ManutencaoDB.dart';
 import 'package:gupo_carro/model/ManutencaoModel.dart';
 
-class MaintLista extends StatefulWidget{
+class MaintLista extends StatefulWidget {
   CarModel car;
 
   MaintLista(this.car);
@@ -13,16 +13,13 @@ class MaintLista extends StatefulWidget{
   MaintListaState createState() => MaintListaState();
 }
 
-class MaintListaState extends State<MaintLista>{
-
+class MaintListaState extends State<MaintLista> {
   List<ManutencaoModel> items = [];
   ManutencaoDB mdb = ManutencaoDB();
 
-
   //Gera itens para preencher a lista. Será removido no futuro.
-  Future<void> insertItems() async{
-
-    for(int i=0; i<=50; i++){
+  Future<void> insertItems() async {
+    for (int i = 0; i <= 50; i++) {
       int id = -1;
       String idCarro = widget.car.id;
       int type = 1;
@@ -46,11 +43,11 @@ class MaintListaState extends State<MaintLista>{
     }
   }
 
-  void loadItems() async{
+  void loadItems() async {
     await insertItems();
     List<ManutencaoModel> _items = await mdb.manutencoesCarro(widget.car.id);
-    setState((){
-      items  = _items;
+    setState(() {
+      items = _items;
     });
   }
 
@@ -60,30 +57,25 @@ class MaintListaState extends State<MaintLista>{
     loadItems();
   }
 
-
   //Constrói o Widget de lista de manutenção
   @override
-  Widget build(BuildContext context){
-    return Scaffold(
-      body: Container(
-        child: ListView.separated(
+  Widget build(BuildContext context) {
+    return Container(
+      child: ListView.separated(
           itemCount: items.length,
-          itemBuilder: (context, index){
-          return ListTile(
-            //color: Colors.blue,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children:[
-                Text(items[index].typeName),
-                Text(items[index].odometro.toString())
-                ]
-            ),
-            subtitle: Text(items[index].preco.toString()),
+          itemBuilder: (context, index) {
+            return ListTile(
+              //color: Colors.blue,
+              title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(items[index].typeName),
+                    Text(items[index].odometro.toString())
+                  ]),
+              subtitle: Text(items[index].preco.toString()),
             );
           },
-          separatorBuilder: (context, index) => const Divider()
-        ),
-      ),
+          separatorBuilder: (context, index) => const Divider()),
     );
   }
 }

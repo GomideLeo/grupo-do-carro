@@ -9,11 +9,8 @@ import 'package:gupo_carro/model/CarModel.dart';
 import 'package:gupo_carro/views/CarView.dart';
 
 class SelecionarCarro extends StatelessWidget {
-  
   @override
   Widget build(BuildContext context) {
-    
-    
     return Container(
       child: Row(
         children: [
@@ -30,23 +27,23 @@ class SelecionarCarro extends StatelessWidget {
 
   List<Widget> buildComponent(BuildContext context) {
     List<Widget> children = [];
-    
+
     children.add(getCarSelection(context));
-    children.add(
-      OutlinedButton(
+    children.add(Padding(
+      padding: const EdgeInsets.only(top: 13.0),
+      child: ElevatedButton(
         onPressed: (() {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const CadastroVeiculo()),
           );
         }),
-        style: ButtonStyle(
-          padding:
-              MaterialStateProperty.all<EdgeInsets>(const EdgeInsets.all(16.0)),
+        style: ElevatedButton.styleFrom(
+          minimumSize: Size(240, 40),
         ),
         child: const Text("Adicionar Carro"),
       ),
-    );
+    ));
 
     return children;
   }
@@ -73,17 +70,20 @@ class SelecionarCarro extends StatelessWidget {
   }
 
   Widget getCarWidget(BuildContext context, CarModel car) {
-    return OutlinedButton(
-      onPressed: (() {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => CarView(car)),
-        );
-      }),
-      child: SizedBox(
-        child: CarData(car,
-            showPhoto: true, showOdometer: true, showGasStats: false),
-        width: 200,
+    return Padding(
+      padding: const EdgeInsets.only(top: 13.0),
+      child: OutlinedButton(
+        onPressed: (() {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CarView(car)),
+          );
+        }),
+        child: SizedBox(
+          child: CarData(car,
+              showPhoto: true, showOdometer: true, showGasStats: false),
+          width: 200,
+        ),
       ),
     );
   }

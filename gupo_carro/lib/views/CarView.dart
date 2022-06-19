@@ -35,23 +35,34 @@ class _CarViewState extends State<CarView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               CarData(widget.car),
-              const Text("Abastecer Carro:"),
-              OutlinedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PostosPerto(
-                          car: widget.car,
-                          gasTypes: widget.car.gasStats
-                                  ?.map((e) => e.gasType)
-                                  .toList() ??
-                              [],
-                        ),
+              const Text(
+                "Abastecer Carro:",
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+              SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PostosPerto(
+                        car: widget.car,
+                        gasTypes: widget.car.gasStats
+                                ?.map((e) => e.gasType)
+                                .toList() ??
+                            [],
                       ),
-                    );
-                  },
-                  child: const Text("Descobrir postos Perto"))
+                    ),
+                  );
+                },
+                child: const Text("Descobrir postos perto"),
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(80, 40),
+                ),
+              )
             ],
           ),
         ),
