@@ -13,9 +13,10 @@ class InfoOleo extends StatefulWidget {
   _InfoOleoState createState() => _InfoOleoState();
 }
 
-
 class _InfoOleoState extends State<InfoOleo> {
-  List<DropdownMenuItem<String>> dropdownItems = [const DropdownMenuItem(child: Text('LOADING'), value: '-1')];
+  List<DropdownMenuItem<String>> dropdownItems = [
+    const DropdownMenuItem(child: Text('LOADING'), value: '-1')
+  ];
   String selectedValue = "-1";
 
   @override
@@ -30,8 +31,10 @@ class _InfoOleoState extends State<InfoOleo> {
     List<TypeModel> lmtm = await mdb.manutencaoTypes();
 
     if (lmtm.length > 1) {
-      List<DropdownMenuItem<String>> menuItems = List.generate(lmtm.length, (i) {
-        return DropdownMenuItem(child: Text(lmtm[i].name), value: lmtm[i].id.toString());
+      List<DropdownMenuItem<String>> menuItems =
+          List.generate(lmtm.length, (i) {
+        return DropdownMenuItem(
+            child: Text(lmtm[i].name), value: lmtm[i].id.toString());
       });
 
       setState(() {
@@ -47,7 +50,7 @@ class _InfoOleoState extends State<InfoOleo> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const Text(
-          "Tipo de manutencao",
+          "\r\r\rTipo de manutencao",
           style: const TextStyle(fontSize: 18, color: Colors.black38),
         ),
         Padding(
@@ -56,12 +59,12 @@ class _InfoOleoState extends State<InfoOleo> {
                 decoration: InputDecoration(
                   enabledBorder: OutlineInputBorder(
                     borderSide:
-                    const BorderSide(color: Colors.black38, width: 1),
+                        const BorderSide(color: Colors.black38, width: 1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   border: OutlineInputBorder(
                     borderSide:
-                    const BorderSide(color: Colors.black38, width: 1),
+                        const BorderSide(color: Colors.black38, width: 1),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   filled: true,
@@ -92,16 +95,16 @@ class _InfoOleoState extends State<InfoOleo> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 150, vertical: 50),
+          padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 50),
           child: TextButton(
             style: TextButton.styleFrom(
-                backgroundColor: Colors.lightBlueAccent,
+                backgroundColor: Color.fromARGB(255, 8, 145, 208),
                 elevation: 8,
                 shadowColor: Colors.white12),
             child: const Text(
               'Confirmar',
               style: const TextStyle(
-                color: Colors.black,
+                color: Color.fromARGB(255, 255, 255, 255),
               ),
             ),
             onPressed: () {
