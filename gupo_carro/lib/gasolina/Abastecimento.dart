@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gupo_carro/model/AbastecimentoModel.dart';
 import 'package:gupo_carro/model/AbastecimentoDB.dart';
 import 'package:gupo_carro/model/CarModel.dart';
 import 'package:gupo_carro/model/TypeModel.dart';
+
 
 class Abastecimento extends StatefulWidget {
   CarModel car;
@@ -23,6 +25,8 @@ class _AbastecimentoState extends State<Abastecimento> {
       onChanged: (String? escolha) {},
     )
   ];
+
+
 
   final TextEditingController textEditingController = TextEditingController();
 
@@ -70,107 +74,108 @@ class _AbastecimentoState extends State<Abastecimento> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        // crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: TextField(
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Litros',
+    return Form(
+      child: SingleChildScrollView(
+        child: Column(
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Litros',
+                ),
+                controller:
+                    _litrosEditingController, //controlador do nosso campo de texto
               ),
-              controller:
-                  _litrosEditingController, //controlador do nosso campo de texto
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: TextField(
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Preço por litro',
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Preço por litro',
+                ),
+                controller:
+                    _precoEditingController, //controlador do nosso campo de texto
               ),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(10),
+            ),
+            const Text("Combustível atual do abastecimento "),
+            RadioListTile<String>(
+              title: const Text("Gasolina"),
+              value: "1",
+              groupValue: _selecionado,
+              onChanged: (String? escolha) {
+                setState(() {
+                  _selecionado = escolha!;
+                });
+              },
+            ),
+            RadioListTile<String>(
+              title: const Text("Álcool"),
+              value: "2",
+              groupValue: _selecionado,
+              onChanged: (String? escolha) {
+                setState(() {
+                  _selecionado = escolha!;
+                });
+              },
+            ),
+            RadioListTile<String>(
+              title: const Text("Diesel"),
+              value: "3",
+              groupValue: _selecionado,
+              onChanged: (String? escolha) {
+                setState(() {
+                  _selecionado = escolha!;
+                });
+              },
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Odômetro',
+                ),
 
-              controller:
-                  _precoEditingController, //controlador do nosso campo de texto
-            ),
-          ),
-          const Padding(
-            padding: EdgeInsets.all(10),
-          ),
-          const Text("Combustível atual do abastecimento "),
-          RadioListTile<String>(
-            title: const Text("Gasolina"),
-            value: "1",
-            groupValue: _selecionado,
-            onChanged: (String? escolha) {
-              setState(() {
-                _selecionado = escolha!;
-              });
-            },
-          ),
-          RadioListTile<String>(
-            title: const Text("Álcool"),
-            value: "2",
-            groupValue: _selecionado,
-            onChanged: (String? escolha) {
-              setState(() {
-                _selecionado = escolha!;
-              });
-            },
-          ),
-          RadioListTile<String>(
-            title: const Text("Diesel"),
-            value: "3",
-            groupValue: _selecionado,
-            onChanged: (String? escolha) {
-              setState(() {
-                _selecionado = escolha!;
-              });
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.all(10),
-            child: TextField(
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Odômetro',
+                controller:
+                    _odometroEditingController, //controlador do nosso campo de texto
               ),
-
-              controller:
-                  _odometroEditingController, //controlador do nosso campo de texto
             ),
-          ),
-          ElevatedButton(
-            child: const Text("Adicionar"),
-            style: ElevatedButton.styleFrom(
-              primary: Color.fromARGB(255, 7, 132, 204),
+            ElevatedButton(
+              child: const Text("Adicionar"),
+              style: ElevatedButton.styleFrom(
+                primary: Color.fromARGB(255, 7, 132, 204),
+              ),
+              onPressed: () {
+                //open database
+                final DAO = AbastecimentoDB();
+                //get data
+                int valor = int.parse(_selecionado);
+                // add data
+                DAO.insertAbastecimento(AbastecimentoModel(
+                  id: -1, // placeholder for adding
+                  idCarro: widget.car.id,
+                  data: DateTime.now(),
+                  combustivelType: valor,
+                  combustivel: " ",
+                  preco: double.parse(_precoEditingController.text),
+                  quantidadeLitros: double.parse(_litrosEditingController.text),
+                  odometro: int.parse(_odometroEditingController.text),
+                ));
+                print("Item selecionado: " + _selecionado);
+              },
             ),
-            onPressed: () {
-              //open database
-              final DAO = AbastecimentoDB();
-              //get data
-              int valor = int.parse(_selecionado);
-              // add data
-              DAO.insertAbastecimento(AbastecimentoModel(
-                id: -1, // placeholder for adding
-                idCarro: widget.car.id,
-                data: DateTime.now(),
-                combustivelType: valor,
-                combustivel: " ",
-                preco: double.parse(_precoEditingController.text),
-                quantidadeLitros: double.parse(_litrosEditingController.text),
-                odometro: int.parse(_odometroEditingController.text),
-              ));
-              print("Item selecionado: " + _selecionado);
-            },
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -81,7 +81,7 @@ class _InfoOleoState extends State<InfoOleo> {
               border: OutlineInputBorder(),
               hintText: 'Tempo',
             ),
-            keyboardType: TextInputType.number,
+            keyboardType: TextInputType.datetime,
           ),
         ),
         Padding(
@@ -95,7 +95,7 @@ class _InfoOleoState extends State<InfoOleo> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 200, vertical: 50),
+          padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 50),
           child: TextButton(
             style: TextButton.styleFrom(
                 backgroundColor: Color.fromARGB(255, 8, 145, 208),
