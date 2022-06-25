@@ -1,14 +1,13 @@
 import 'dart:developer';
 import 'dart:ui';
 
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gupo_carro/model/CarModel.dart';
 import 'package:gupo_carro/model/GasStatsModel.dart';
 import 'package:gupo_carro/model/OdometerModel.dart';
 import 'package:gupo_carro/views/HomePage.dart';
-import 'package:intl/intl.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
@@ -21,7 +20,7 @@ class _AcceptGas {
 
   double getRate() {
     return textEditingController.text != ""
-        ? double.parse(textEditingController.text)
+        ? double.parse(textEditingController.text.replaceAll(",", "."))
         : 0;
   }
 
@@ -44,10 +43,6 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
   ];
 
   final _formKey = GlobalKey<FormState>();
-
-  var mascara = MaskTextInputFormatter(
-    mask: "##.#"
-  );
 
   final TextEditingController _nicknameEditingController =
       TextEditingController();
@@ -168,7 +163,7 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
                   style: const TextStyle(
                     fontSize: 18,
                   ),
-                  inputFormatters: [UpperCaseFormat()],
+                  inputFormatters: [UpperCaseFormat(), LengthLimitingTextInputFormatter(7)],
                   validator: (value){
                     if (value == null || value.isEmpty) {
                       return "Preenchimento obrigatório";
@@ -282,8 +277,7 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
             style: const TextStyle(
               fontSize: 18,
             ),
-            inputFormatters: [mascara],
-            // textDirection: TextDirection.RTLx,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly, CentavosInputFormatter(moeda: false, casasDecimais: 2)],
             controller: gasType
                 .textEditingController, //controlador do nosso campo de texto
           ),

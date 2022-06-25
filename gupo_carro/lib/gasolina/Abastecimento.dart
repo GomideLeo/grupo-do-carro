@@ -1,9 +1,11 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gupo_carro/model/AbastecimentoModel.dart';
 import 'package:gupo_carro/model/AbastecimentoDB.dart';
 import 'package:gupo_carro/model/CarModel.dart';
 import 'package:gupo_carro/model/TypeModel.dart';
+import 'package:gupo_carro/views/CarView.dart';
 
 
 class Abastecimento extends StatefulWidget {
@@ -26,7 +28,7 @@ class _AbastecimentoState extends State<Abastecimento> {
     )
   ];
 
-
+  final _formKey = GlobalKey<FormState>();
 
   final TextEditingController textEditingController = TextEditingController();
 
@@ -75,6 +77,7 @@ class _AbastecimentoState extends State<Abastecimento> {
   @override
   Widget build(BuildContext context) {
     return Form(
+      key: _formKey,
       child: SingleChildScrollView(
         child: Column(
           // crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,6 +90,7 @@ class _AbastecimentoState extends State<Abastecimento> {
                   border: OutlineInputBorder(),
                   hintText: 'Litros',
                 ),
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly, CentavosInputFormatter(moeda: false, casasDecimais: 3)],
                 controller:
                     _litrosEditingController, //controlador do nosso campo de texto
               ),
@@ -99,6 +103,7 @@ class _AbastecimentoState extends State<Abastecimento> {
                   border: OutlineInputBorder(),
                   hintText: 'Preço por litro',
                 ),
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly, CentavosInputFormatter(moeda: true, casasDecimais: 3)],
                 controller:
                     _precoEditingController, //controlador do nosso campo de texto
               ),
@@ -139,13 +144,20 @@ class _AbastecimentoState extends State<Abastecimento> {
             ),
             Padding(
               padding: const EdgeInsets.all(10),
-              child: TextField(
+              child: TextFormField(
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Odômetro',
                 ),
-
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                validator: (value){
+                  if (value == null || value.isEmpty){
+                    return "Preenchimento obrigatório";
+                  }else if(int.parse(value) < widget.car.odometer!.value){
+                    return "Valor do odômetro não pode ser menor que " + widget.car.odometer!.value.toString();
+                  }
+                },
                 controller:
                     _odometroEditingController, //controlador do nosso campo de texto
               ),
@@ -156,22 +168,35 @@ class _AbastecimentoState extends State<Abastecimento> {
                 primary: Color.fromARGB(255, 7, 132, 204),
               ),
               onPressed: () {
-                //open database
-                final DAO = AbastecimentoDB();
-                //get data
-                int valor = int.parse(_selecionado);
-                // add data
-                DAO.insertAbastecimento(AbastecimentoModel(
-                  id: -1, // placeholder for adding
-                  idCarro: widget.car.id,
-                  data: DateTime.now(),
-                  combustivelType: valor,
-                  combustivel: " ",
-                  preco: double.parse(_precoEditingController.text),
-                  quantidadeLitros: double.parse(_litrosEditingController.text),
-                  odometro: int.parse(_odometroEditingController.text),
-                ));
-                print("Item selecionado: " + _selecionado);
+                if (_formKey.currentState!.validate()) {
+                  //open database
+                  final DAO = AbastecimentoDB();
+                  //get data
+                  int valor = int.parse(_selecionado);
+                  // add data
+                  DAO.insertAbastecimento(AbastecimentoModel(
+                    id: -1,
+                    // placeholder for adding
+                    idCarro: widget.car.id,
+                    data: DateTime.now(),
+                    combustivelType: valor,
+                    combustivel: " ",
+                    preco: double.parse(
+                        _precoEditingController.text.substring(3).replaceAll(
+                            ".", "").replaceAll(",", ".")),
+                    quantidadeLitros: double.parse(
+                        _litrosEditingController.text.substring(3).replaceAll(
+                            ".", "").replaceAll(",", ".")),
+                    odometro: int.parse(_odometroEditingController.text),
+                  ));
+                  print("Item selecionado: " + _selecionado);
+
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CarView(widget.car))
+                  );
+                };
               },
             ),
           ],
