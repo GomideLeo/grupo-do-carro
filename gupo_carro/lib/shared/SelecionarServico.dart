@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:gupo_carro/gasolina/Abastecimento.dart';
 import 'package:gupo_carro/gasolina/postosPerto.dart';
@@ -6,6 +8,7 @@ import 'package:gupo_carro/oleo/InfoOleo.dart';
 import 'package:gupo_carro/shared/CadastroVeiculo.dart';
 import 'package:gupo_carro/shared/CarStats.dart';
 import 'package:gupo_carro/shared/SelecionarCarro.dart';
+import 'package:path/path.dart';
 
 class _Opcao {
   String name;
@@ -16,12 +19,16 @@ class _Opcao {
 
 class SelecionarServico extends StatefulWidget {
   CarModel car;
+  bool showChoice;
+  String service;
 
   var dropOpcoes = [
     _Opcao('Escolha', null),
   ];
 
-  SelecionarServico(this.car, {Key? key}) : super(key: key);
+  SelecionarServico(this.car,
+      {this.showChoice = true, this.service = "", Key? key})
+      : super(key: key);
 
   @override
   _SelecionarServicoState createState() => _SelecionarServicoState();
@@ -36,10 +43,13 @@ class _SelecionarServicoState extends State<SelecionarServico> {
       _Opcao("Manutencao", InfoOleo())
     ]);
 
+    int idx = widget.dropOpcoes.indexWhere((el) => el.name == widget.service);
+    log(idx.toString());
+    int _selectedValue = idx == -1 ? 0 : idx;
+    
     ValueNotifier<_Opcao> _dropValue =
-        ValueNotifier(widget.dropOpcoes.elementAt(0));
-    int _selectedValue = 0;
-
+        ValueNotifier(widget.dropOpcoes.elementAt(_selectedValue));
+    
     return Center(
       child: ValueListenableBuilder<_Opcao>(
         valueListenable: _dropValue,
@@ -47,7 +57,7 @@ class _SelecionarServicoState extends State<SelecionarServico> {
           return SingleChildScrollView(
             child: Column(
               children: [
-                DropdownButton(
+                if (widget.showChoice) DropdownButton(
                   hint: const Text('Escolha a opção desejada'),
                   value: _selectedValue,
                   onChanged: (escolha) {

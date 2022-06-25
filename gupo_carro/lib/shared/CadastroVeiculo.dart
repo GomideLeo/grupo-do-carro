@@ -283,7 +283,7 @@ class _CadastroVeiculoState extends State<CadastroVeiculo> {
               fontSize: 18,
             ),
             inputFormatters: [mascara],
-            textDirection: TextDirection.RTLx,
+            // textDirection: TextDirection.RTLx,
             controller: gasType
                 .textEditingController, //controlador do nosso campo de texto
           ),
