@@ -44,7 +44,6 @@ class _SelecionarServicoState extends State<SelecionarServico> {
     ]);
 
     int idx = widget.dropOpcoes.indexWhere((el) => el.name == widget.service);
-    log(idx.toString());
     int _selectedValue = idx == -1 ? 0 : idx;
     
     ValueNotifier<_Opcao> _dropValue =

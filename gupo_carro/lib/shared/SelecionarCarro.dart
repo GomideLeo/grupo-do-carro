@@ -82,7 +82,7 @@ class SelecionarCarro extends StatelessWidget {
         child: SizedBox(
           child: CarData(car,
               showPhoto: true, showOdometer: true, showGasStats: false),
-          width: 200,
+          width: 240,
         ),
       ),
     );
