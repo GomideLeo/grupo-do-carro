@@ -91,10 +91,10 @@ class _CarViewState extends State<CarView> {
               icon: Icon(Icons.settings),
               label: 'Manutenção',
               backgroundColor: Colors.blue),
-          // const BottomNavigationBarItem(
-          //     icon: Icon(Icons.notifications),
-          //     label: 'Notificações',
-          //     backgroundColor: Colors.blue),
+          const BottomNavigationBarItem(
+              icon: Icon(Icons.notifications),
+              label: 'Notificações',
+              backgroundColor: Colors.blue),
         ],
       ),
     );

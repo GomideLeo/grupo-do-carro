@@ -11,7 +11,7 @@ class CarData extends StatefulWidget {
   bool showPhoto;
   bool showOdometer;
   bool showGasStats;
-
+  
   CarData(this.car,
       {this.showOdometer = true,
       this.showPhoto = true,

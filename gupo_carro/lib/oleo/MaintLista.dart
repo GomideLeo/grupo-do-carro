@@ -61,21 +61,31 @@ class MaintListaState extends State<MaintLista> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: ListView.separated(
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              //color: Colors.blue,
-              title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(items[index].typeName),
-                    Text(items[index].odometro.toString())
-                  ]),
-              subtitle: Text(items[index].preco.toString()),
-            );
-          },
-          separatorBuilder: (context, index) => const Divider()),
+      child: items.isNotEmpty
+          ? buildList()
+          : const Center(
+              child: Text(
+              "Ainda não existem manutenções para este carro.",
+              style: TextStyle(fontSize: 18),
+            )),
     );
+  }
+
+  ListView buildList() {
+    return ListView.separated(
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            //color: Colors.blue,
+            title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(items[index].typeName),
+                  Text(items[index].odometro.toString())
+                ]),
+            subtitle: Text(items[index].preco.toString()),
+          );
+        },
+        separatorBuilder: (context, index) => const Divider());
   }
 }
